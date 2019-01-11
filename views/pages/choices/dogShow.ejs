@@ -4,14 +4,73 @@
   <%-include ../../layout/head%>
   <title>Find Your Friend</title>
 </head>
-<body>
-  <header>
+<body id="dogShow">
+  <header id="dog-show-header" class="header">
+    <section id="non-main-logo">
     <%-include ../../layout/nav%>
+      <img id="small-logo" src="images/woofer-logo.png" alt="Woofer Logo">
+    </section>
   </header>
   <main>
-    <h1>HELLO!!</h1>
-  </main>
+    <div class="wrap">
+      <!-- start jtinder container -->
+      <div id="tinderslide">
+          <ul>
+              <li class="pane1">
+                  <div class="img"></div><!--This needs to be an img tag with ejs-->
+                  <div>Samantha</div><!--This needs to be dogs name-->
+                  <div class="like"></div>
+                  <div class="dislike"></div>
+              </li>
+              <li class="pane2">
+                  <div class="img"></div>
+                  <div>Clifford</div>
+                  <div class="like"></div>
+                  <div class="dislike"></div>
+              </li>
+              <li class="pane3">
+                  <div class="img"></div>
+                  <div>Max</div>
+                  <div class="like"></div>
+                  <div class="dislike"></div>
+              </li>
+              <li class="pane4">
+                  <div class="img"></div>
+                  <div>Biscuit</div>
+                  <div class="like"></div>
+                  <div class="dislike"></div>
+              </li>
+              <li class="pane5">
+                  <div class="img"></div>
+                  <div>Charlie</div>
+                  <div class="like"></div>
+                  <div class="dislike"></div>
+              </li>
+          </ul>
+      </div>
+      <!-- end jtinder container -->
+  </div>
+  <!-- end padding container -->
+
+  <!-- jTinder trigger by buttons  -->
+  <div class="actions">
+      <!-- <a href="#" class="dislike"><i></i></a>
+      <a href="#" class="like"><i></i></a> -->
+  </div>
+
+  <!-- jTinder status text  -->
+  <div id="status"></div>
+
+</main>
 </body>
+<!-- jQuery lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.min.js"></script>
+<!-- transform2d lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.transform2d.js"></script>
+<!-- jTinder lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.jTinder.js"></script>
+<!-- jTinder initialization script -->
+<script type="text/javascript" src="../../js/jTinder-Library/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="/js/app.js"></script>
 </html>

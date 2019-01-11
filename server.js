@@ -84,7 +84,7 @@ app.listen(PORT, () => console.log(`APP is up on PORT : ${PORT}`));
 // //==================CHECK USER===========================================
 // function checkUser(){
 //   if (!localStorage.getItem('userId')){
-//     let SQL = `INSERT INTO users 
+//     let SQL = `INSERT INTO users
 //                 (liked, viewed)
 //                 VALUES ($1, $2)
 //                 RETURNING id`;
