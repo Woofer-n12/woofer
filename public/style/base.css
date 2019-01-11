@@ -9,12 +9,13 @@ body {
   background-size: cover;
   display: flex;
   justify-content: center;
-  text-align: center;
+  /* text-align: center; */
 }
 
 section {
   justify-content: center;
-  margin-top: 20%;
+  margin-top: 40%;
+  margin-right: 58px;
   z-index: 100;
 }
 
@@ -23,13 +24,16 @@ section {
 } */
 
 #hero-logo {
-  width: 90%;
+  width: 100%;
   justify-content: center; 
 }
 
 h2 {
   font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: rgb(51, 110, 165);
 }
 
 #location-input {
@@ -37,7 +41,8 @@ h2 {
   text-align: center;
   width: 80%;
   margin-top: 20%;
-
+  font-size: 15px;
+  box-shadow: 2px 1px 3px rgb(25,55,82);
 }
 /* main {
   display: flex;
@@ -57,9 +62,10 @@ h2 {
 a {
   text-decoration: none;
   transition: color 0.3s ease;
+  color: whitesmoke;
 }
 .menu-options {
-  color: #0E2A38;
+  color: white;
 }
 .menu-options:hover {
   color:  rgb(82, 4, 4, 0.692);
@@ -92,7 +98,7 @@ a {
   height: 4px;
   margin-bottom: 5px;
   position: relative;
-  background: black;
+  background: rgb(51, 110, 165);
   border-radius: 3px;
   z-index: 1;
   transform-origin: 4px 0px;
@@ -110,7 +116,7 @@ a {
 #menuToggle input:checked ~ span {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
-  background: #232323;
+  background: whitesmoke;
 }
 /*But let's hide the middle one.*/
 #menuToggle input:checked ~ span:nth-last-child(3) {
@@ -124,11 +130,11 @@ a {
 /*Make this absolute positioned at the top left of the screen*/
 #menu {
   position: absolute;
-  width: 150px;
+  width: 95px;
   margin: -100px 0 0 -50px;
   padding: 50px;
   padding-top: 125px;
-  background: #ededed;
+  background: #cd661d;
   list-style-type: none;
   -webkit-font-smoothing: antialiased; /* to stop flickering of text in safari */
   transform-origin: 0% 0%;
@@ -136,11 +142,11 @@ a {
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
 #menu li {
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 0px 0px;
   font-size: 22px;
-  background-color: #ededed;
+  background-color: #cd661d;
   border: none;
-  font-family: 'Alegreya SC', serif;
+  font-family: 'Alegreya Sans SC', sans-serif;
 }
 /* And let's slide it in from the left*/
 #menuToggle input:checked ~ ul {
