@@ -61,7 +61,7 @@ app.post('/available-dogs', goDogs);
 
 //================================HOME=======================================
 function goHome(req, res){
-  res.render('ejs path')
+  res.render('views/pages/index.ejs')
     .then(()=>{
       checkUser();
     })
