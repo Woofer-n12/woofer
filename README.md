@@ -1,2 +1,3 @@
 # woofer
-cody was here
+Hamburger Menu Reference - needs better attribution
+https://codepen.io/erikterwan/pen/EVzeRP 
