@@ -3,25 +3,54 @@
 }
 
 body {
+/* background-attachment: fixed; */
+background-repeat: no-repeat;
+background-size: cover;
+display: flex;
+justify-content: center;
+/* text-align: center; */
+}
+
+.header {
+  width: 100%;
+}
+
+
+main {
+  width: 100%;
+  height: 60%;
+  float: left;
+}
+
+#index { /*this is the body*/
   background-image: url("../images/hero-dog.png");
-  /* background-attachment: fixed; */
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  /* text-align: center; */
+}
+
+#dogShow { /*this is the body*/
+  background-image: url(../images/background-ipad.png);
+  display: block;
+  margin-top: -155px;
 }
 
 section {
   justify-content: center;
   margin-top: 40%;
   margin-right: 58px;
-  z-index: 100;
 }
 
-/* header {
-  z-index: -100;
-} */
+#non-main-logo {
+  display: block;
+  width: 80%;
+  height: 100%;
+}
+
+#small-logo{
+  width: 44%;
+  float: right;
+  position: absolute;
+  margin-top: -19px;
+  margin-left: 205px;
+}
 
 #hero-logo {
   width: 100%;
@@ -42,16 +71,64 @@ h2 {
   width: 80%;
   margin-top: 20%;
   font-size: 15px;
+  padding: 7px 0;
   box-shadow: 2px 1px 3px rgb(25,55,82);
-  /* color:  rgb(25,55,82); */
 }
-/* main {
-  display: flex;
-} */
 
-/* form {
-  justify-content: center;
-  text-align: center;
-} */
+/* IPAD */
+@media (min-width:767px){ 
+  #index {
+    background-image: url("../images/hero-dog-ipad.png");
+  }
+
+  #dogShow { /*this is the body*/
+    background-image: url("../images/background-ipad.png");
+    display: block;
+  }
+
+  header {
+    width: 100%;
+  }
+  
+  section {
+    margin-top: 20%;
+    justify-content: center;
+    /* margin-top: 40%; */
+    margin-right: 58px;
+  }
+  
+  #location-input {
+    margin-top: 20%;
+    margin-left: 38px;
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+  
+  #small-logo{
+    width: 20%;
+  }
+  #dogShow { /*this is the body*/
+    background-image: url(../images/background-ipad.png);
+    display: block;
+    margin-top: -155px;
+  }
+  
+  #non-main-logo {
+    display: block;
+    width: 80%;
+    height: 100%;
+  }
+  
+  #small-logo{
+    width: 31%;
+    float: right;
+    position: absolute;
+    margin-top: -42px;
+    margin-left: 518px;
+  }
+}
 
 

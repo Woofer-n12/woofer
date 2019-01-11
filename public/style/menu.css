@@ -19,7 +19,7 @@ a {
   position: relative;
   top: 25px;
   margin-left: 25px;
-  z-index: 1;
+  z-index: 99;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -32,7 +32,7 @@ a {
   left: -5px;
   cursor: pointer;
   opacity: 0; /* hide this */
-  z-index: 2; /* and place it over the hamburger */
+  z-index: 100; /* and place it over the hamburger */
   -webkit-touch-callout: none;
 }
 /*Just a quick hamburger*/
@@ -44,7 +44,7 @@ a {
   position: relative;
   background: rgb(51, 110, 165);
   border-radius: 3px;
-  z-index: 1;
+  z-index: 99;
   transform-origin: 4px 0px;
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
               background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
@@ -98,3 +98,11 @@ a {
 }
 
 /* ======================== End of Hamburger ========================= */
+@media (min-width:767px){ 
+  #menuToggle span {
+    width: 56px;
+    height: 6px;
+    margin-bottom: 9px;
+    
+  }
+}
