@@ -1,0 +1,29 @@
+{
+  "name": "woofer",
+  "version": "1.0.0",
+  "description": "cody was here",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Woofer-n12/woofer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Woofer-n12/woofer/issues"
+  },
+  "homepage": "https://github.com/Woofer-n12/woofer#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "pg": "^7.7.1",
+    "superagent": "^4.1.0"
+  }
+}
