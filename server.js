@@ -20,11 +20,16 @@ client.on('error', err => console.error(err));
 
 //========================REQUEST CALLS==============================
 app.get('/', goHome);
+app.get('/searchResult', searchList) //just for testing
 // app.post('/search', goSearch);
 
 //================================HOME=======================================
 function goHome(request, response){
   response.render('pages/index')
+}
+
+function searchList(request, response){
+  response.render('pages/choices/dogShow')
 }
 //==============================SEARCH=====================================
 // function goSearch(req,  res){
