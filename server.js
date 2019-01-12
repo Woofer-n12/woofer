@@ -56,7 +56,7 @@ client.connect();
 client.on('error', err => console.error(err));
 
 //========================REQUEST CALLS==============================
-app.get('/', goHome);
+app.post('/', goHome);
 app.post('/available-dogs', goDogs);
 
 //================================HOME=======================================
