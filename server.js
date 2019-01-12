@@ -70,7 +70,7 @@ client.on('error', err => console.error(err));
 //========================REQUEST CALLS==============================
 app.get('/', goHome);
 app.post('/available-dogs', goDogs);
-app.get('/user', makeUser);
+app.post('/user', makeUser);
 
 //================================HOME=======================================
 function goHome(req, res){
@@ -80,15 +80,15 @@ function goHome(req, res){
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
-  (likes, views)
-  VALUES ($1, $2)
-  RETURNING id`;
+                (likes, views)
+                VALUES ($1, $2)
+                RETURNING id`;
   let values = ['', ''];
+  console.log(req.body);
   return client.query(SQL, values)
     .then(data =>{
-      var userId=data.rows[0].id;
-    
-      res.render('pages/index.ejs', {id: userId});
+      console.log(data.rows[0].id);
+      res.render('pages/index2.ejs', {userId: data.rows[0].id});
       // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
     .catch(err =>{

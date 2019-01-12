@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%-include ../layout/head%>
+  <title>Woofer</title>
+</head>
+<body id="index">
+
+  <header>
+    <%-include ../layout/nav%>
+  </header>
+  <main>
+    <section>
+    <img id="hero-logo" src="images/woofer-logo.png" alt="Woofer Logo">
+      <h2>Looking for a Good Time? Adopt a Shelter Dog.</h2>
+    </section>
+    <form action='/available-dogs' method='post'>
+      <input id="location-input" type="text" name="search" placeholder="ZIPCODE   SEARCH" required>
+      <input id="search-button" type="submit" value="SEARCH DOGS">
+    </form>
+    <button id='something'><%= userId %></button>
+  </main>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="/js/user.js"></script>
+<script src="/js/app.js"></script>
+</html>
