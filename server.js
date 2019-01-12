@@ -70,43 +70,33 @@ client.on('error', err => console.error(err));
 //========================REQUEST CALLS==============================
 app.get('/', goHome);
 app.post('/available-dogs', goDogs);
+app.get('/user', makeUser);
 
 //================================HOME=======================================
 function goHome(req, res){
-  res.render('views/pages/index.ejs')
-    .then(()=>{
-      checkUser();
+  res.render('pages/index.ejs');
+  // checkUser();
+}
+//==================CHECK USER===========================================
+function makeUser(req, res){
+  let SQL = `INSERT INTO users
+                (likes, viewed)
+                VALUES ($1, $2)
+                RETURNING id`;
+  let values = ['', ''];
+  return client.query(SQL, values)
+    .then(data =>{
+      res.render('pages/index.ejs', {userId: data.rows[0].id});
+      // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
-    .catch(err => {
+    .catch(err =>{
       console.log(err);
     });
 }
-//==================CHECK USER===========================================
-function checkUser(){
-  if (!localStorage.getItem('userId')){
-    let SQL = `INSERT INTO users
-                (liked, viewed)
-                VALUES ($1, $2)
-                RETURNING id`;
-    let values = ['', ''];
-    return client.query(SQL, values)
-      .then(data =>{
-        localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
-      })
-      .catch(err =>{
-        console.log(err);
-      });
-  }
-}
 //==============================SEARCH=====================================
 function goDogs(req, res){
-  checkUser();
-  searchApiForShelters(req.body.search[0])
-    .then(() => {
-
-    })
-    .catch(err => {console.log(err);
-    });
+  // checkUser();
+  searchApiForShelters(req.body.search[0]);
 
   searchApiForDogs(req.body.search[0])
     .then(data => {
@@ -115,13 +105,13 @@ function goDogs(req, res){
       newData.body.petfinder.pets.pet.forEach(ele => {
         dataArray.push(new Dog(ele));
       });
-      res.render('views/pages/choices/dogShow.ejs', {dataArray});
+      res.render('pages/choices/dogShow.ejs', {dataArray});
     })
     .catch(er => console.log(er));
 }
 
 function searchApiForShelters(zip){
-  return superAgent.get(`http://api.petfinder.com/shelter.find?key=4c25c02137bff6c103c819f8d62a1654&format=json&location=${zip}`).then(data => {
+  return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`).then(data => {
     let SQL = `INSERT INTO shelters
                 (shelters_id, name, city, state, zip, phone, email)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -140,7 +130,7 @@ function searchApiForShelters(zip){
 }
 
 function searchApiForDogs(zip){
-  return superAgent.get(`http://api.petfinder.com/pet.find?key=4c25c02137bff6c103c819f8d62a1654&format=json&animal=dog&location=${zip}`);
+  return superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`);
 }
 
 //==================CONSTRUCTORS=================================
@@ -191,4 +181,3 @@ function Shelter(shelter){
 }
 //===========================Listener============================
 app.listen(PORT, () => console.log(`APP is up on PORT : ${PORT}`));
-
