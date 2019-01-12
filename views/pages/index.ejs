@@ -19,9 +19,10 @@
       <input id="search-button" type="submit" value="SEARCH DOGS">
     </form>
     <!-- <button id='something'>something else</button> -->
-   <script>$(function(){
-      if(userId){
-        localStorage.setItem('userId', JSON.stringify(<%= userId %>);
+   <script>(function(){
+      if(id.userId){
+        console.log('userId found');
+        localStorage.setItem('userId', JSON.stringify(id.userId));
       }
     });</script>
   </main>

@@ -2,7 +2,7 @@
 $(function(){
   if (!localStorage.getItem('userId')){
     console.log('hello');
-    $.get('http://localhost:8000/user').then(console.log).catch(console.error);
+    $.get('http://localhost:8000/user').catch(console.error);
   }
 
 });

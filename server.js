@@ -80,13 +80,15 @@ function goHome(req, res){
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
-                (likes, viewed)
-                VALUES ($1, $2)
-                RETURNING id`;
+  (likes, views)
+  VALUES ($1, $2)
+  RETURNING id`;
   let values = ['', ''];
   return client.query(SQL, values)
     .then(data =>{
-      res.render('pages/index.ejs', {userId: data.rows[0].id});
+      var userId=data.rows[0].id;
+    
+      res.render('pages/index.ejs', {id: userId});
       // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
     .catch(err =>{
