@@ -18,12 +18,9 @@
       <input id="location-input" type="text" name="search" placeholder="ZIPCODE   SEARCH" required>
       <input id="search-button" type="submit" value="SEARCH DOGS">
     </form>
-    <!-- <button id='something'>something else</button> -->
-   <script>$(function(){
-      if(userId){
-        localStorage.setItem('userId', JSON.stringify(<%= userId %>);
-      }
-    });</script>
+    <form action='/user' method='post'>
+    <input type='submit' id='checkU'>
+    </form>
   </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
