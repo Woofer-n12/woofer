@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS dogs
-DROP TABLE IF EXISTS users
-DROP TABLE IF EXISTS shelters
+DROP TABLE IF EXISTS dogs;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS shelters;
 
-CREATE TABLE IF NOT EXISTS dogs (
+CREATE TABLE dogs (
   id SERIAL PRIMARY KEY,
   dog_id INTEGER,
-  name VARCHAR(255),
-  age VARCHAR(255),
+  name VARCHAR (255),
+  age VARCHAR (255),
   gender VARCHAR(255),
   housetrained VARCHAR(255),
   size VARCHAR(255),
@@ -18,18 +18,18 @@ CREATE TABLE IF NOT EXISTS dogs (
   breed VARCHAR(255),
   mix VARCHAR(255),
   photos VARCHAR(500),
-  description TEXT
-  FOREIGN KEY (shelter_id) REFERENCES shelters(shelters_id)
-)
+  description TEXT,
+  shelter_id VARCHAR(255)
+);
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   user_id VARCHAR(255),
   likes TEXT,
   views TEXT
-)
+);
 
-CREATE TABLE IF NOT EXISTS shelters (
+CREATE TABLE shelters (
   id SERIAL PRIMARY KEY,
   shelters_id VARCHAR(255),
   name VARCHAR(255),
@@ -38,4 +38,4 @@ CREATE TABLE IF NOT EXISTS shelters (
   zip VARCHAR(255),
   phone VARCHAR(255),
   email VARCHAR(255)
-)
+);
