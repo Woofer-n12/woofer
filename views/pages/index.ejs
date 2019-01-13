@@ -5,6 +5,7 @@
   <title>Woofer</title>
 </head>
 <body id="index">
+
   <header>
     <%-include ../layout/nav%>
   </header>
@@ -13,10 +14,15 @@
     <img id="hero-logo" src="images/woofer-logo.png" alt="Woofer Logo">
       <h2>Looking for a Good Time? Adopt a Shelter Dog.</h2>
     </section>
-    <form>
+    <form action='/available-dogs' method='post'>
       <input id="location-input" type="text" name="search" placeholder="ZIPCODE   SEARCH" required>
       <input id="search-button" type="submit" value="SEARCH DOGS">
     </form>
+
+    <form action='/user' method='post'>
+    <input type='submit' id='checkU'>
+    </form>
+
   </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
