@@ -264,14 +264,27 @@ h2 {
     padding-right: 5px;
   }
   
-  #option-key {
+  #key-container {
     width: 100%;
     background:#cd661d;
+    padding-right: 10px;
+  }
+
+  #option-key {
     color: whitesmoke;
     display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: space-around;
+    list-style: none;
   }
   .key-item {
-    flex-direction: row;
-    width: 20%;
+    font-size: 18px;
+    text-decoration: none;
+    padding:10px;
+    align-items: baseline;
+    justify-content:center;
   }
+  
 }
