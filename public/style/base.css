@@ -187,11 +187,13 @@ h2 {
     flex-direction: column;
     border: 4px solid #cd661d;
     margin-left: 10px;
+    position: relative;
   }
   
   .woof-list-img {
     height: 100%;
     margin-bottom: 10px;
+    position: relative;
   }
   
   .woof-list-dog {
@@ -314,6 +316,14 @@ h2 {
   
   #richard {
     margin-bottom: 10px;
+  }
+
+  .available {
+    z-index: 90;
+    position: absolute;
+    height: 100px;
+    /* margin-left: 29px; */
+    float: right;
   }
   
 }
