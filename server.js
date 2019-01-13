@@ -72,7 +72,6 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 
-
 //================================HOME=======================================
 function goHome(req, res){
   res.render('pages/index.ejs');
