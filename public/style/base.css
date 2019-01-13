@@ -8,6 +8,7 @@ background-repeat: no-repeat;
 background-size: cover;
 display: flex;
 justify-content: center;
+/* height:120%; */
 /* text-align: center; */
 }
 
@@ -136,6 +137,19 @@ h2 {
     background-image: url(../images/background-ipad.png);
     display: block;
     margin-top: -155px;
+    height: 100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #index {
+    background-image: url(../images/background-ipad.png);
+  }
+
+  #about {
+    background-image: url(../images/background-ipad.png);
+    -webkit-overflow-scrolling: touch;
+    height: 1197px;
   }
   
   #non-main-logo {
@@ -286,7 +300,10 @@ h2 {
     padding-bottom: 10px;
     justify-content: space-around;
     list-style: none;
+    background:#cd661d;
+    width: 100%;
   }
+
   .key-item {
     font-size: 18px;
     text-decoration: none;
@@ -295,5 +312,8 @@ h2 {
     justify-content:center;
   }
   
-  header
+  #richard {
+    margin-bottom: 10px;
+  }
+  
 }

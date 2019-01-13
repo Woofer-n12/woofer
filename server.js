@@ -21,6 +21,7 @@ client.on('error', err => console.error(err));
 //========================REQUEST CALLS==============================
 app.get('/', goHome);
 app.get('/searchResult', searchList)
+app.get('/about-the-team', aboutTeam)
 app.get('/woof-list', wooflist) //just for testing
 // app.post('/search', goSearch);
 
@@ -35,6 +36,10 @@ function searchList(request, response){
 
 function wooflist(request, response){
   response.render('pages/wooflist/listShow')
+}
+
+function aboutTeam(request, response){
+  response.render('pages/about')
 }
 //==============================SEARCH=====================================
 // function goSearch(req,  res){
