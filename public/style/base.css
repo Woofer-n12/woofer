@@ -327,9 +327,14 @@ h2 {
     background: #cd661d;
     color: whitesmoke;
     height: 200px;
-    margin-top: 500px;
+    margin-top: 1000px;
     position: absolute;
-    display: none;
+    /* display: none; */
   }
-  
+
+  .toggle{
+    background-color: #cd661d;
+    height:100px;
+    width:400px;
+  }
 }

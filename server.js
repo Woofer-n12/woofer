@@ -106,11 +106,11 @@ function Dog(pet){
   this.kidFriendly = true;
   this.vaccinated = false;
   this.isAdopted = pet.status.$t;
-  this.breed = pet.breeds.breed.$t;
+  this.breed = pet.breeds.breed.$t||'Unknown';
   this.mix = pet.mix.$t;
   this.picture = pet.media.photos.photo;//returns an array
   this.description = pet.description.$t;
-  // this.options(pet);
+  this.options(pet);
 }
 Dog.prototype.options = function(pet){
   // console.log(pet);
@@ -128,7 +128,7 @@ Dog.prototype.options = function(pet){
         this.kidFriendly = false;
       }
     });
-  }else {
+  }else if (pet.options.option){
     let derp = pet.options.option;
     if(derp.$t === 'noCats'){
       this.catFriendly = false;

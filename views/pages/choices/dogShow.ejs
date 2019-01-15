@@ -23,23 +23,23 @@
                                 <div class="img" style="background-image: url(<%=dog.picture[3].$t%>)"></div>
                             <div><%=dog.name%></div>
                             <div class="like"></div>
-                            <div class="dislike"></div>
+                            <div class="dislike"></div>                            
                         </li>
-                                <div class="dogShow-detailForm <%=dog.ID%>">
+                                <div class="dogShow-detailForm" id="<%=dog.ID%>">
                                     <form  action="/available-dogs" method="POST">
                                         <input type="text" value="<%=dog.name%>" name="name">
                                         <input type="text" value="<%=dog.picture[3].$t%>" name="image">
-                                        <input type="text" value="<%=dog.ID%>" name="ID">
+                                        <input class ="thisss"type="text" value="<%=dog.ID%>" name="ID">
                                         <input type="text" value="<%=dog.locationID%>" name="location">
                                         <input type="text" value="<%=dog.age%>" name="age">
                                         <input type="text" value="<%=dog.gender%>" name="gender">
-                                        <input type="text" value="<%if(dog.housetrained === true) { $(this).removeClass('housetrained')} %>" name="housetrained">
-                                        <input type="text" value="<%if(dog.fixed === true) { $(this).removeClass('altered')} %>" name="altered">
-                                        <input type="text" value="<%if(dog.catFriendly === false) { $(this).removeClass('noCats')} %>" name="noCats">
-                                        <input type="text" value="<%if(dog.kidFriendly === false) { $(this).removeClass('noKids')} %>" name="noKids">
-                                        <input type="text" value="<%if(dog.vaccinated === true) { $(this).removeClass('hasShots')} %>" name="hasShots">
+                                        <input type="text" value="<%=dog.housetrained%>" name="housetrained">
+                                        <input type="text" value="<%=dog.fixed %>" name="altered">
+                                        <input type="text" value="<%=dog.catFriendly %>" name="noCats">
+                                        <input type="text" value="<%=dog.kidFriendly %>" name="noKids">
+                                        <input type="text" value="<%=dog.vaccinated  %>" name="hasShots">
                                         <input type="text" value="<%=dog.size%>" name="size">
-                                        <input type="text" value="<%if(dog.isAdopted !=='A') { $(this).removeClass('available')}%>" name="available">
+                                        <input type="text" value="<%=dog.isAdopted%>" name="available">
                                         <input type="text" value="<%=dog.breed%>" name="breed">
                                         <input type="text" value="<%=dog.mix%>" name="mix">
                                         <input type="text" value="<%=dog.description%>" name="description">
@@ -51,7 +51,7 @@
             <!-- end jtinder container -->
         </div>
         <!-- end padding container -->
-
+        <button class= "toggle" >HITME</button>
         <!-- jTinder trigger by buttons  -->
         <div class="actions">
             <a href="#" class="dislike, toggle"><i></i></a>
