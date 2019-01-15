@@ -25,24 +25,43 @@
                             <div class="like"></div>
                             <div class="dislike"></div>                            
                         </li>
-                                <div class="dogShow-detailForm" id="<%=dog.ID%>">
-                                    <form  action="/available-dogs" method="POST">
-                                        <input type="text" value="<%=dog.name%>" name="name">
-                                        <input type="text" value="<%=dog.picture[3].$t%>" name="image">
-                                        <input class ="thisss"type="text" value="<%=dog.ID%>" name="ID">
-                                        <input type="text" value="<%=dog.locationID%>" name="location">
-                                        <input type="text" value="<%=dog.age%>" name="age">
-                                        <input type="text" value="<%=dog.gender%>" name="gender">
-                                        <input type="text" value="<%=dog.housetrained%>" name="housetrained">
-                                        <input type="text" value="<%=dog.fixed %>" name="altered">
-                                        <input type="text" value="<%=dog.catFriendly %>" name="noCats">
-                                        <input type="text" value="<%=dog.kidFriendly %>" name="noKids">
-                                        <input type="text" value="<%=dog.vaccinated  %>" name="hasShots">
-                                        <input type="text" value="<%=dog.size%>" name="size">
-                                        <input type="text" value="<%=dog.isAdopted%>" name="available">
-                                        <input type="text" value="<%=dog.breed%>" name="breed">
-                                        <input type="text" value="<%=dog.mix%>" name="mix">
-                                        <input type="text" value="<%=dog.description%>" name="description">
+                                <div class="dogShow-detailForm-div" id="<%=dog.ID%>">
+                                    <form  class="dogShow-detailForm" action="/available-dogs" method="POST">
+                                        <h2 class="form-title">Information about <%=dog.name%></h2>
+                                        <div class="form-input">
+                                            <label for="breed">Breed: </label>
+                                            <input type="text" value="<%=dog.breed%>" name="breed">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="mix">Mixed Breed: </label>
+                                            <input type="text" value="<%=dog.mix%>" name="mix">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="age">Age </label>
+                                            <input type="text" value="<%=dog.age%>" name="age">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="gender">Gender: </label>
+                                            <input type="text" value="<%=dog.gender%>" name="gender">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="size">Size: </label>
+                                            <input type="text" value="<%=dog.size%>" name="size">
+                                        </div>
+                                        <div class="form-description">
+                                            <label for="description">Description: </label>
+                                            <textarea name="description" rows="10" wrap="soft"><%=dog.description%></textarea>
+                                        </div>
+                                        <input class ="thisss"type="hidden" value="<%=dog.ID%>" name="ID">
+                                        <input type="hidden" value="<%=dog.locationID%>" name="location">
+                                        <input type="hidden" value="<%=dog.name%>" name="name">
+                                        <input type="hidden" value="<%=dog.picture[3].$t%>" name="image">
+                                        <input type="hidden" value="<%=dog.isAdopted%>" name="available">
+                                        <input type="hidden" value="<%=dog.housetrained%>" name="housetrained">
+                                        <input type="hidden" value="<%=dog.fixed %>" name="altered">
+                                        <input type="hidden" value="<%=dog.catFriendly %>" name="noCats">
+                                        <input type="hidden" value="<%=dog.kidFriendly %>" name="noKids">
+                                        <input type="hidden" value="<%=dog.vaccinated  %>" name="hasShots">
                                     </form>
                                 </div>
                     <% }) %>
@@ -51,11 +70,11 @@
             <!-- end jtinder container -->
         </div>
         <!-- end padding container -->
-        <button class= "toggle" >HITME</button>
+
         <!-- jTinder trigger by buttons  -->
         <div class="actions">
-            <a href="#" class="dislike, toggle"><i></i></a>
-            <!-- <a href="#" class="toggle"><i></i></a> -->
+            <a href="#" class="dislike"><i></i></a>
+            <a href="#" class="toggle"><i></i></a>
             <a href="#" class="like"><i></i></a>
         </div>
 
