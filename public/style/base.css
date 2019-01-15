@@ -141,10 +141,6 @@ h2 {
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }
-  
-  #index {
-    background-image: url(../images/background-ipad.png);
-  }
 
   #about {
     background-image: url(../images/background-ipad.png);
@@ -321,8 +317,9 @@ h2 {
   .available {
     z-index: 90;
     position: absolute;
-    height: 100px;
-    /* margin-left: 29px; */
+    height: 75px;
+    margin-left: 319px;
+    margin-top: 5px;
     float: right;
   }
   
