@@ -40,7 +40,7 @@ function makeUser(req, res){
                 VALUES ($1, $2)
                 RETURNING id`;
   let values = ['', ''];
-  console.log(req.body);
+  //
   return client.query(SQL, values)
     .then(data =>{
       console.log(data.rows[0].id);
@@ -63,7 +63,7 @@ function goDogs(req, res){
       newData.body.petfinder.pets.pet.forEach(ele => {
         dataArray.push(new Dog(ele));
       });
-      console.log (dataArray[0]);
+      // console.log (dataArray[0]);
       res.render('pages/choices/dogShow.ejs', {dataArray});
     })
     .catch(er => console.log(er));
@@ -71,13 +71,16 @@ function goDogs(req, res){
 function searchApiForShelters(zip){
   return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`)
     .then(data => {
+      let newData = data;
       let SQL = `INSERT INTO shelters
                 (shelters_id, name, city, state, zip, phone, email)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING id`
-      let dataArray = data.body.petfinder.shelters.shelter.map(ele => {
-        new Shelter(ele);
+      let dataArray = [];
+      data.body.petfinder.shelters.shelter.forEach(ele => {
+        dataArray.push(new Shelter(ele));
       });
+      console.log(dataArray[0]);
       dataArray.forEach(ele => {
         let values = [ele.shelters_id, ele.name, ele.city, ele.state, ele.zip, ele.phone, ele.email];
         return client.query(SQL, values);
@@ -107,10 +110,11 @@ function Dog(pet){
   this.mix = pet.mix.$t;
   this.picture = pet.media.photos.photo;//returns an array
   this.description = pet.description.$t;
-  this.options(pet);
+  // this.options(pet);
 }
 Dog.prototype.options = function(pet){
-  if (pet.options){
+  // console.log(pet);
+  if (Array.isArray(pet.options.option)){
     pet.options.option.forEach(ele => {
       if(ele.$t === 'noCats'){
         this.catFriendly = false;
@@ -124,6 +128,19 @@ Dog.prototype.options = function(pet){
         this.kidFriendly = false;
       }
     });
+  }else {
+    let derp = pet.options.option;
+    if(derp.$t === 'noCats'){
+      this.catFriendly = false;
+    }else if(derp.$t === 'altered'){
+      this.fixed = true;
+    }else if(derp.$t === 'hasShots'){
+      this.vaccinated = true;
+    }else if(derp.$t === 'housetrained'){
+      this.housetrained = true;
+    }else if(derp.$t === 'noKids'){
+      this.kidFriendly = false;
+    }
   }
 }
 function Shelter(shelter){

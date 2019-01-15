@@ -18,7 +18,9 @@ $('#tinderslide').jTinder({
   likeSelector: '.like',
   dislikeSelector: '.dislike'
 });
+//======================SAVE STUFF FOR DB INSERTION=================================
 
+//=====================================================================================
 /**
  * Set button action to trigger jTinder like & dislike.
  */
