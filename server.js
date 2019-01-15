@@ -29,7 +29,7 @@ app.get('/about-the-team', aboutTeam);
 function goHome(req, res){
   res.render('pages/index.ejs');
 }
-//=============================ABOUT5 US ===================================
+//=============================ABOUT US ===================================
 function aboutTeam(request, response){
   response.render('pages/about');
 }

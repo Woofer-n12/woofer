@@ -188,25 +188,20 @@ body {
 }
 
 /* jTinder images */
-#tinderslide .pane5 .img {
-    background: url("../images/test-dog-1.jpg") no-repeat scroll center center;
+#tinderslide .dogShow-img .img {
+    background-repeat: no-repeat; 
+    background-attachment: scroll;
+    background-position: center;
     background-size: cover;
+    /* height: 100%; */
+    width: 100%;
 }
-#tinderslide .pane4 .img {
-    background: url("../images/test-dog-2.jpg") no-repeat scroll center center;
-    background-size: cover;
+.dogShow-ul {
+    display: flex;
 }
-#tinderslide .pane3 .img {
-    background: url("../images/test-dog-3.jpg") no-repeat scroll center center;
-    background-size: cover;
-}
-#tinderslide .pane2 .img {
-    background: url("../images/test-dog-4.jpg") no-repeat scroll center center;
-    background-size: cover;
-}
-#tinderslide .pane1 .img {
-    background: url("../images/test-dog-5.jpg") no-repeat scroll center center;
-    background-size: cover;
+.dogShow-img {
+    display: flex;
+    flex-direction: column;
 }
 
 /* jTinder status text */
@@ -227,4 +222,7 @@ body {
 #tinderslide li {
   font-size: 59px;
 }
+/* .img {
+    display:none;
+} */
 }

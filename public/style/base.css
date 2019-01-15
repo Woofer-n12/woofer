@@ -322,5 +322,14 @@ h2 {
     margin-top: 5px;
     float: right;
   }
+
+  .dogShow-detailForm {
+    background: #cd661d;
+    color: whitesmoke;
+    height: 200px;
+    margin-top: 500px;
+    position: absolute;
+    display: none;
+  }
   
 }
