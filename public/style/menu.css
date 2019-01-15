@@ -85,7 +85,7 @@ a {
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
-#menu li {
+#menu .menu-li {
   padding: 10px 0px 0px 0px;
   font-size: 22px;
   background-color: #cd661d;
