@@ -17,39 +17,54 @@
         <div class="wrap">
             <!-- start jtinder container -->
             <div id="tinderslide">
-                <ul>
-                    <li class="pane1">
-                        <div class="img"></div>
-                        <!--This needs to be an img tag with ejs-->
-                        <div>Samantha</div>
-                        <!--This needs to be dogs name-->
-                        <div class="like"></div>
-                        <div class="dislike"></div>
-                    </li>
-                    <li class="pane2">
-                        <div class="img"></div>
-                        <div>Clifford</div>
-                        <div class="like"></div>
-                        <div class="dislike"></div>
-                    </li>
-                    <li class="pane3">
-                        <div class="img"></div>
-                        <div>Max</div>
-                        <div class="like"></div>
-                        <div class="dislike"></div>
-                    </li>
-                    <li class="pane4">
-                        <div class="img"></div>
-                        <div>Biscuit</div>
-                        <div class="like"></div>
-                        <div class="dislike"></div>
-                    </li>
-                    <li class="pane5">
-                        <div class="img"></div>
-                        <div>Charlie</div>
-                        <div class="like"></div>
-                        <div class="dislike"></div>
-                    </li>
+                <ul class="dogShow-ul">
+                    <% dataArray.forEach(dog => { %>
+                        <li class="dogShow-img <%=dog.ID%>">
+                                <div class="img" style="background-image: url(<%=dog.picture[3].$t%>)"></div>
+                            <div><%=dog.name%></div>
+                            <div class="like"></div>
+                            <div class="dislike"></div>                            
+                        </li>
+                                <div class="dogShow-detailForm-div" id="<%=dog.ID%>">
+                                    <form  class="dogShow-detailForm" action="/available-dogs" method="POST">
+                                        <h2 class="form-title">Information about <%=dog.name%></h2>
+                                        <div class="form-input">
+                                            <label for="breed">Breed: </label>
+                                            <input type="text" value="<%=dog.breed%>" name="breed">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="mix">Mixed Breed: </label>
+                                            <input type="text" value="<%=dog.mix%>" name="mix">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="age">Age </label>
+                                            <input type="text" value="<%=dog.age%>" name="age">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="gender">Gender: </label>
+                                            <input type="text" value="<%=dog.gender%>" name="gender">
+                                        </div>
+                                        <div class="form-input">
+                                            <label for="size">Size: </label>
+                                            <input type="text" value="<%=dog.size%>" name="size">
+                                        </div>
+                                        <div class="form-description">
+                                            <label for="description">Description: </label>
+                                            <textarea name="description" rows="10" wrap="soft"><%=dog.description%></textarea>
+                                        </div>
+                                        <input class ="thisss"type="hidden" value="<%=dog.ID%>" name="ID">
+                                        <input type="hidden" value="<%=dog.locationID%>" name="location">
+                                        <input type="hidden" value="<%=dog.name%>" name="name">
+                                        <input type="hidden" value="<%=dog.picture[3].$t%>" name="image">
+                                        <input type="hidden" value="<%=dog.isAdopted%>" name="available">
+                                        <input type="hidden" value="<%=dog.housetrained%>" name="housetrained">
+                                        <input type="hidden" value="<%=dog.fixed %>" name="altered">
+                                        <input type="hidden" value="<%=dog.catFriendly %>" name="noCats">
+                                        <input type="hidden" value="<%=dog.kidFriendly %>" name="noKids">
+                                        <input type="hidden" value="<%=dog.vaccinated  %>" name="hasShots">
+                                    </form>
+                                </div>
+                    <% }) %>
                 </ul>
             </div>
             <!-- end jtinder container -->
@@ -58,8 +73,9 @@
 
         <!-- jTinder trigger by buttons  -->
         <div class="actions">
-            <!-- <a href="#" class="dislike"><i></i></a>
-            <a href="#" class="like"><i></i></a> -->
+            <a href="#" class="dislike"><i></i></a>
+            <a href="#" class="toggle"><i></i></a>
+            <a href="#" class="like"><i></i></a>
         </div>
 
         <!-- jTinder status text  -->
