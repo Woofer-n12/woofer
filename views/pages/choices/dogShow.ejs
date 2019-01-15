@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include ../../layout/head%>
+        <title>Find Your Friend</title>
+</head>
+
+<body id="dogShow">
+    <header id="dog-show-header" class="header">
+        <section id="non-main-logo">
+            <%-include ../../layout/nav%>
+                <img id="small-logo" src="images/woofer-logo.png" alt="Woofer Logo">
+        </section>
+    </header>
+    <main>
+        <div class="wrap">
+            <!-- start jtinder container -->
+            <div id="tinderslide">
+                <ul class="dogShow-ul">
+                    <% dataArray.forEach(dog => { %>
+                        <li class="dogShow-img <%=dog.ID%>">
+                                <div class="img" style="background-image: url(<%=dog.picture[3].$t%>)"></div>
+                            <div><%=dog.name%></div>
+                            <div class="like"></div>
+                            <div class="dislike"></div>
+                        </li>
+                                <div class="dogShow-detailForm <%=dog.ID%>">
+                                    <form  action="/available-dogs" method="POST">
+                                        <input type="text" value="<%=dog.name%>" name="name">
+                                        <input type="text" value="<%=dog.picture[3].$t%>" name="image">
+                                        <input type="text" value="<%=dog.ID%>" name="ID">
+                                        <input type="text" value="<%=dog.locationID%>" name="location">
+                                        <input type="text" value="<%=dog.age%>" name="age">
+                                        <input type="text" value="<%=dog.gender%>" name="gender">
+                                        <input type="text" value="<%if(dog.housetrained === true) { $(this).removeClass('housetrained')} %>" name="housetrained">
+                                        <input type="text" value="<%if(dog.fixed === true) { $(this).removeClass('altered')} %>" name="altered">
+                                        <input type="text" value="<%if(dog.catFriendly === false) { $(this).removeClass('noCats')} %>" name="noCats">
+                                        <input type="text" value="<%if(dog.kidFriendly === false) { $(this).removeClass('noKids')} %>" name="noKids">
+                                        <input type="text" value="<%if(dog.vaccinated === true) { $(this).removeClass('hasShots')} %>" name="hasShots">
+                                        <input type="text" value="<%=dog.size%>" name="size">
+                                        <input type="text" value="<%if(dog.isAdopted !=='A') { $(this).removeClass('available')}%>" name="available">
+                                        <input type="text" value="<%=dog.breed%>" name="breed">
+                                        <input type="text" value="<%=dog.mix%>" name="mix">
+                                        <input type="text" value="<%=dog.description%>" name="description">
+                                    </form>
+                                </div>
+                    <% }) %>
+                </ul>
+            </div>
+            <!-- end jtinder container -->
+        </div>
+        <!-- end padding container -->
+
+        <!-- jTinder trigger by buttons  -->
+        <div class="actions">
+            <a href="#" class="dislike, toggle"><i></i></a>
+            <!-- <a href="#" class="toggle"><i></i></a> -->
+            <a href="#" class="like"><i></i></a>
+        </div>
+
+        <!-- jTinder status text  -->
+        <div id="status"></div>
+
+    </main>
+</body>
+<!-- jQuery lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.min.js"></script>
+<!-- transform2d lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.transform2d.js"></script>
+<!-- jTinder lib -->
+<script type="text/javascript" src="../../js/jTinder-Library/jquery.jTinder.js"></script>
+<!-- jTinder initialization script -->
+<script type="text/javascript" src="../../js/jTinder-Library/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="/js/app.js"></script>
+
+</html>
