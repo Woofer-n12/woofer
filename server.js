@@ -43,7 +43,6 @@ function makeUser(req, res){
   //
   return client.query(SQL, values)
     .then(data =>{
-      console.log(data.rows[0].id);
       res.render('pages/index2.ejs', {userId: data.rows[0].id});
       // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
@@ -54,19 +53,8 @@ function makeUser(req, res){
 //==============================SEARCH=====================================
 function goDogs(req, res){
   searchApiForShelters(req.body.search);
-
-  searchApiForDogs(req.body.search)
-    .then(data => {
-      let newData = data;
-      //console.log(newData.body.petfinder.pets.pet[0].options);
-      let dataArray = [];
-      newData.body.petfinder.pets.pet.forEach(ele => {
-        dataArray.push(new Dog(ele));
-      });
-      // console.log (dataArray[0]);
-      res.render('pages/choices/dogShow.ejs', {dataArray});
-    })
-    .catch(er => console.log(er));
+  let dataArray = searchApiForDogs(req.body.search)
+  res.render('pages/choices/dogShow.ejs', {dataArray});
 }
 function searchApiForShelters(zip){
   return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`)
@@ -80,7 +68,6 @@ function searchApiForShelters(zip){
       data.body.petfinder.shelters.shelter.forEach(ele => {
         dataArray.push(new Shelter(ele));
       });
-      console.log(dataArray[0]);
       dataArray.forEach(ele => {
         let values = [ele.shelters_id, ele.name, ele.city, ele.state, ele.zip, ele.phone, ele.email];
         return client.query(SQL, values);
@@ -90,7 +77,23 @@ function searchApiForShelters(zip){
     });
 }
 function searchApiForDogs(zip){
-  return superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`);
+  let dataArray = [];
+  superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`)
+    .then(data=>{
+      let newData = data;
+      newData.body.petfinder.pets.pet.forEach(ele => {
+        dataArray.push(new Dog(ele));
+      });
+      let SQL = `INSERT INTO dogs
+      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+      dataArray.forEach(ele=>{
+        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID];
+        client.query(SQL, values).catch(er => console.log(er));
+      })
+    }).catch(err => {
+      console.log(err);
+    });
+  return dataArray;
 }
 //==================CONSTRUCTORS=================================
 function Dog(pet){
@@ -108,7 +111,7 @@ function Dog(pet){
   this.isAdopted = pet.status.$t;
   this.breed = pet.breeds.breed.$t;
   this.mix = pet.mix.$t;
-  this.picture = pet.media.photos.photo;//returns an array
+  this.picture = pet.media.photos.photo[3].$t;//returns an array
   this.description = pet.description.$t;
   // this.options(pet);
 }

@@ -1,11 +1,13 @@
 /**
  * jTinder initialization
  */
+
+
 $('#tinderslide').jTinder({
   // dislike callback
   onDislike: function (item) {
     // set the status text
-    $('#status').html('Dislike image ' + (item.index()+1));
+    $('#status').html('Dislike image ' + (item.index());  
   },
   // like callback
   onLike: function (item) {
