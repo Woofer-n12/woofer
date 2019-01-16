@@ -1,15 +1,24 @@
 /**
  * jTinder initialization
  */
+$(function(){
 
-var x=$('.thisss');
-let counter=x.length-1;
+  var x=$('.thisss');
+  let counter=x.length-1;
 
-$('#tinderslide').jTinder({
+  $('#tinderslide').jTinder({
   // dislike callback
-  onDislike: function (item) {
-    console.log(('#tinderslide').jTinder);
+    onDislike: function (item) {
+      console.log(('#tinderslide').jTinder);
+      // set the status text
+      console.log(item[0].classList[1]);
+      onSwipe(item);
+      $('#status').html('Dislike image ' + (item.index()+1));
+    },
+    // like callback
+    onLike: function (item) {
     // set the status text
+<<<<<<< HEAD
     console.log(item[0].classList[1]);
     onSwipe(item);
     $('#status').html('Dislike image ' + (item.index()+1));
@@ -45,14 +54,10 @@ function onSwipe(item){
 
 //======================SAVE STUFF FOR DB INSERTION=================================
 
-//=====================================================================================
-/**
- * Set button action to trigger jTinder like & dislike.
- */
-$('.actions .like, .actions .dislike').click(function(e){
-  e.preventDefault();
-  $('#tinderslide').jTinder($(this).attr('class'));
-  console.log('look', $(this).attr('class'));
+  $('.actions .like, .actions .dislike').click(function(e){
+    e.preventDefault();
+    console.log('look', $(this).attr('class'));
+    $('#tinderslide').jTinder($(this).attr('class'));
+  });
+
 });
-
-
