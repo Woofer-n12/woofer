@@ -93,7 +93,23 @@ function searchApiForShelters(zip){
     });
 }
 function searchApiForDogs(zip){
-  return superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`);
+  let dataArray = [];
+  superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`)
+    .then(data=>{
+      let newData = data;
+      newData.body.petfinder.pets.pet.forEach(ele => {
+        dataArray.push(new Dog(ele));
+      });
+      let SQL = `INSERT INTO dogs
+      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+      dataArray.forEach(ele=>{
+        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID];
+        client.query(SQL, values).catch(er => console.log(er));
+      })
+    }).catch(err => {
+      console.log(err);
+    });
+  return dataArray;
 }
 
 //==================likedogs=======================
