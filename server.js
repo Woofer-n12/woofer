@@ -24,6 +24,9 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
+app.post('/likedog', likeDog);
+app.post('/dogviewed', viewDog);
+
 
 //================================HOME=======================================
 function goHome(req, res){
@@ -39,11 +42,12 @@ function makeUser(req, res){
                 (likes, views)
                 VALUES ($1, $2)
                 RETURNING id`;
-  let values = ['', ''];
-  //
+
+  let like=[];
+  let view=[];
+  let values = [JSON.stringify(like), JSON.stringify(view)];
   return client.query(SQL, values)
     .then(data =>{
-      console.log(data.rows[0].id);
       res.render('pages/index2.ejs', {userId: data.rows[0].id});
       // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
@@ -75,12 +79,11 @@ function searchApiForShelters(zip){
       let SQL = `INSERT INTO shelters
                 (shelters_id, name, city, state, zip, phone, email)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
-                RETURNING id`
+                RETURNING id`;
       let dataArray = [];
       data.body.petfinder.shelters.shelter.forEach(ele => {
         dataArray.push(new Shelter(ele));
       });
-      console.log(dataArray[0]);
       dataArray.forEach(ele => {
         let values = [ele.shelters_id, ele.name, ele.city, ele.state, ele.zip, ele.phone, ele.email];
         return client.query(SQL, values);
@@ -92,6 +95,47 @@ function searchApiForShelters(zip){
 function searchApiForDogs(zip){
   return superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`);
 }
+
+//==================likedogs=======================
+function likeDog(req, res){
+  let userid=req.body.userId;
+  let dogid=req.body.dogId;
+  let SQL=`SELECT * FROM users WHERE id = $1`;
+  client.query(SQL,[userid])
+    .then (data=>{
+      console.log(data.rows);
+      let likes = JSON.parse(data.rows[0].likes);
+      console.log(likes);
+      let views = JSON.parse(data.rows[0].views);
+      likes.push(dogid);
+      views.push(dogid);
+      let SQL2 = `UPDATE users SET likes=$1, views=$2 WHERE id=$3`;
+      let value2 = [JSON.stringify(likes), JSON.stringify(views), userid];
+      client.query(SQL2, value2);
+      console.log(`dog with id  ${dogid} was added to the table @ user id ${userid}`);
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+function viewDog(req,res){
+  let userid=req.body.userId;
+  let dogid=req.body.dogId;
+  let SQL=`SELECT * FROM users WHERE id = $1`;
+  client.query(SQL,[userid])
+    .then (data=>{
+      let views = JSON.parse(data.rows[0].views);
+      views.push(dogid);
+      let SQL2 = `UPDATE users SET views=$1 WHERE id=$2`;
+      let value2 = [JSON.stringify(views), userid];
+      client.query(SQL2, value2);
+      console.log(`dog with id  ${dogid} was added to the table @ user id ${userid}`);
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+
 //==================CONSTRUCTORS=================================
 function Dog(pet){
   this.ID = pet.id.$t;
