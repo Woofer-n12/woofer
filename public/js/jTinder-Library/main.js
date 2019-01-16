@@ -14,7 +14,7 @@ $('#tinderslide').jTinder({
     onSwipe(item);
     $('#status').html('Dislike image ' + (item.index()+1));
     let userID= JSON.parse(localStorage.getItem('userId'));
-    $.post('/likedog',{userId:`${userID}`, dogId:`${item[0].classList[1]}`});
+    $.post('/dogviewed',{userId:`${userID}`, dogId:`${item[0].classList[1]}`});
   },
   // like callback
   onLike: function (item) {
@@ -22,6 +22,8 @@ $('#tinderslide').jTinder({
     onSwipe(item);
     console.log(item[0].classList[1]);
     $('#status').html('Like image ' + (item.index()+1));
+    let userID= JSON.parse(localStorage.getItem('userId'));
+    $.post('/likedog',{userId:`${userID}`, dogId:`${item[0].classList[1]}`});
   },
   animationRevertSpeed: 200,
   animationSpeed: 400,
