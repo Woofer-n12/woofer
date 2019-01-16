@@ -495,4 +495,11 @@ h2 {
     display: block;
     margin-top: -155px;
   }
+
+  .available {
+    display: none;
+  }
+  .adopted {
+    display
+  }
 }
