@@ -18,7 +18,6 @@ $(function(){
     // like callback
     onLike: function (item) {
     // set the status text
-<<<<<<< HEAD
     console.log(item[0].classList[1]);
     onSwipe(item);
     $('#status').html('Dislike image ' + (item.index()+1));
@@ -53,7 +52,11 @@ function onSwipe(item){
 }
 
 //======================SAVE STUFF FOR DB INSERTION=================================
-
+  //=====================================================================================
+  /**
+ * Set button action to trigger jTinder like & dislike.
+ */
+>>>>>>> 98c4ecc309a7c30778fbac1923ce542311c20ec9
   $('.actions .like, .actions .dislike').click(function(e){
     e.preventDefault();
     console.log('look', $(this).attr('class'));
