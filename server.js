@@ -24,6 +24,8 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
+app.get('/woof-list', woofList);
+app.get('/dog-detail', dogDetail);
 
 //================================HOME=======================================
 function goHome(req, res){
@@ -33,6 +35,15 @@ function goHome(req, res){
 function aboutTeam(request, response){
   response.render('pages/about');
 }
+// ===========================WOOF LIST==================================
+function woofList(request, response){
+  response.render('pages/wooflist/listShow');
+}
+// =============================DOG DETAIL ================================
+function dogDetail(request,response){
+  response.render('pages/wooflist/dogDetail');
+}
+
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
@@ -113,7 +124,6 @@ function Dog(pet){
   this.options(pet);
 }
 Dog.prototype.options = function(pet){
-  // console.log(pet);
   if (Array.isArray(pet.options.option)){
     pet.options.option.forEach(ele => {
       if(ele.$t === 'noCats'){

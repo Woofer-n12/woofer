@@ -365,4 +365,134 @@ h2 {
     /* height: 50px; */
     overflow:hidden scroll;
   }
+
+  /* CSS for DOG DETAIL Page */
+
+  #dogDetail-main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 205px;
+  }
+
+  .dogDetail-main-div {
+    border: 4px solid rgb(51, 110, 165);
+    width: 90%;
+    margin-top: 35px;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+
+  }
+
+  .dogDetail-all-dog-info {
+    display:flex;
+    width: 95%;
+    justify-content: center;
+  }
+  
+  .dogDetail-name-div {
+    background: #cd661d;
+    padding: 4px;
+    border-bottom: 4px solid rgb(51, 110, 165)
+  }
+  
+  .dogDetail-heading {
+    color: whitesmoke;
+    
+  }
+  
+  .dogDetail-img-div {
+    width: 50%;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+  
+  .dogDetail-img {
+    width: 100%;
+    border: 3px solid  #cd661d;
+  }
+
+  .dogDetail-info-div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    /* margin-top: 15px; */
+    justify-content: space-evenly;
+    /* margin-left: 20px; */
+  }
+
+  .dogDetail-options {
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+  }
+
+  .dogDetail-description {
+    width: 100%;
+    flex-wrap: wrap;
+    display:flex;
+    justify-content: space-evenly;
+    height: 172px;
+    overflow: scroll;
+  }
+
+  .dogDetail-info-ul {
+    font-size: 20px;
+    padding-left: 15px;
+    color: rgb(25,55,82);
+  }
+
+  .dogDetail-info-ul li {
+    margin-bottom: 8px;
+  }
+
+  .dogDetail-description p {
+    font-size: 18px;
+    width: 98%;
+    text-align: justify;
+    color: rgb(25,55,82);
+  }
+
+  .shelter-name-div {
+    background: #cd661d;
+    padding: 4px;
+    border-bottom: 4px solid rgb(51, 110, 165);
+    border-top:4px solid rgb(51, 110, 165);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  } 
+  .shelter-info li {
+    width: 98%;
+    /* border: 2px solid blue; */
+    margin-left: 4px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: rgb(25,55,82);
+  }
+  .shelter-info {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .shelter-sub-info {
+    -webkit-appearance: none;
+    display: flex;
+    justify-content: flex-start;
+    width: 49% !important;
+    /* border: 1px dashed red; */
+  }
+  .a-tag {
+    text-decoration: underline !important;
+    color: #cd661d;
+  }
+
+  #dogDetail {
+    background-image: url("../images/hero-dog-ipad.png");
+    position: absolute;
+    display: block;
+    margin-top: -155px;
+  }
 }
