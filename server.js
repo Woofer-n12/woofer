@@ -24,6 +24,8 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
+app.post('/likedog', likeDog);
+
 
 //================================HOME=======================================
 function goHome(req, res){
@@ -39,11 +41,10 @@ function makeUser(req, res){
                 (likes, views)
                 VALUES ($1, $2)
                 RETURNING id`;
-  let values = ['', ''];
+  let values = ['....', '......'];
   //
   return client.query(SQL, values)
     .then(data =>{
-      console.log(data.rows[0].id);
       res.render('pages/index2.ejs', {userId: data.rows[0].id});
       // localStorage.setItem('userId', JSON.stringify(data.rows[0].id));
     })
@@ -80,7 +81,6 @@ function searchApiForShelters(zip){
       data.body.petfinder.shelters.shelter.forEach(ele => {
         dataArray.push(new Shelter(ele));
       });
-      console.log(dataArray[0]);
       dataArray.forEach(ele => {
         let values = [ele.shelters_id, ele.name, ele.city, ele.state, ele.zip, ele.phone, ele.email];
         return client.query(SQL, values);
@@ -92,6 +92,26 @@ function searchApiForShelters(zip){
 function searchApiForDogs(zip){
   return superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${zip}`);
 }
+
+//==================likedogs=======================
+function likeDog(req, res){
+  let userid=req.body.userId;
+  let dogid=req.body.dogId;
+  let arr = [userid, dogid];
+  let SQL=`SELECT * FROM users WHERE user_id = $1`
+  client.query(SQL,[userid])
+    .then (data=>{
+      console.log(data.rows);
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+function dogviewed(req,res){
+
+}
+
+
 //==================CONSTRUCTORS=================================
 function Dog(pet){
   this.ID = pet.id.$t;
