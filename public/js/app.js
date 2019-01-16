@@ -8,11 +8,12 @@ $(function(){
   }
 
 });
+
 $('#search-button').on('click', function(){
   console.log('++++button clicked+++++');
 });
 
-// if (!localStorage.getItem('userId')){
-//   $.get('http://localhost:8000/something').then(console.log).catch(console.error);
-// }
+if (!localStorage.getItem('userId')){
+  $.get('http://localhost:8000/something').then(console.log).catch(console.error);
+}
 
