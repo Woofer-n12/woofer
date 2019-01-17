@@ -2,6 +2,10 @@
   font-family: 'Alegreya Sans SC', sans-serif;
 }
 
+html{
+  width: 100%;
+}
+
 body {
 /* background-attachment: fixed; */
 background-repeat: no-repeat;
@@ -28,12 +32,14 @@ main {
   float: left;
 }
 
-#index { /*this is the body*/
-  background-image: url("../images/hero-dog.png");
+#index, #dogDetail { /*this is the body*/
+  background: url("../images/hero-dog.png") no-repeat bottom center fixed;
+  max-width:100%;
+  background-size: 414px;
 }
 
 #dogShow { /*this is the body*/
-  background-image: url(../images/background-ipad.png);
+  background: url(../images/background-ipad.png);
   display: block;
   margin-top: -155px;
 }
@@ -54,8 +60,8 @@ section {
   width: 44%;
   float: right;
   position: absolute;
-  margin-top: -19px;
-  margin-left: 205px;
+  margin-top: -21px;
+  margin-left: 222px;
 }
 
 #hero-logo {
@@ -93,14 +99,20 @@ h2 {
   color: rgb(25,55,82);
 }
 
+#something {
+  display: none;
+}
+
 /* IPAD */
 @media (min-width:767px){ 
   #index {
-    background-image: url("../images/hero-dog-ipad.png");
+    background: url("../images/hero-dog-ipad.png") no-repeat bottom center fixed;
+    background-size: 768px;
+    max-width:100%;
   }
 
   #dogShow { /*this is the body*/
-    background-image: url("../images/background-ipad.png");
+    background: url("../images/background-ipad.png");
     display: block;
   }
 
@@ -124,18 +136,15 @@ h2 {
     font-size: 30px;
   }
   
-  #small-logo{
-    width: 20%;
-  }
   #dogShow { /*this is the body*/
-    background-image: url(../images/background-ipad.png) no-repeat center center fixed;
+    background: url(../images/background-ipad.png) no-repeat center center fixed;
     display: block;
     margin-top: -155px;
     background-size: 100% 100%;
   }
 
   #listShow {
-    background-image: url(../images/background-ipad.png) no-repeat center center fixed;
+    background: url(../images/background-ipad.png) no-repeat center center fixed;
     display: block;
     margin-top: -155px;
     background-size: 100% 100%;
@@ -144,7 +153,7 @@ h2 {
   }
 
   #about {
-    background-image: url(../images/background-ipad.png) no-repeat center center fixed;
+    background: url(../images/background-ipad.png) no-repeat center center fixed;
     -webkit-overflow-scrolling: touch;
     height: 1197px;
     background-size: 100% 100%;
@@ -163,8 +172,8 @@ h2 {
     width: 31%;
     float: right;
     position: absolute;
-    margin-top: -42px;
-    margin-left: 518px;
+    margin-top: -43px;
+    margin-left: 509px;
   }
 
   #wooflist-banner {
@@ -475,10 +484,12 @@ h2 {
   }
 
   #dogDetail {
-    background-image: url("../images/hero-dog-ipad.png");
     position: absolute;
     display: block;
     margin-top: -155px;
+    background: url("../images/hero-dog-ipad.png") no-repeat bottom center fixed;
+    background-size: 768px;
+    max-width:100%;
   }
 
   .available {
