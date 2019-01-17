@@ -103,6 +103,54 @@ h2 {
   display: none;
 }
 
+.dogShow-detailForm-div {
+  background: #cd661d;
+  color: whitesmoke;
+  height: 508px;
+  margin-top: 472px;
+  margin-bottom: 40px;
+  position: absolute;
+  padding-right: 0px;
+  padding-left: 31.359px;
+  width: 97%;
+}
+
+.dogShow-detailForm {
+  margin-left: -7px;
+  margin-top: 24px;
+}
+
+.form-title {
+  color: whitesmoke;
+  margin-bottom: 16px;
+  font-size: 20px;
+  width: 91%;
+}
+
+.dogShow-detailForm input {
+  width: 91%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* label {
+  width: 100%px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+} */
+
+.form-input {
+  width: 317px;
+  border: none;
+}
+
+
+
+.form-description, textarea {
+  width: 600px;
+  overflow:hidden scroll;
+}
+
 /* IPAD */
 @media (min-width:767px){ 
   #index {
