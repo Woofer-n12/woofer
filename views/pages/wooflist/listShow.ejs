@@ -21,158 +21,57 @@
       
       <article>
         <ul>
-          <li class="woof-list-dog">
-            <div class="wooflist-image-div">
-              <img class="woof-list-img" src="images/test-dog-2.jpg">
-            </div>
-            <img class="available"> <!--this will hide/show--> 
-            <section class="list-section">
-              <section class="wooflist-p">
-                <img class="available" src="images/adopted.png"> <!--this will hide/show--> 
-                <p>Name: Shadow <!--EJS HERE--></p>
-                <p>Age: 200 (in dog years) <!--EJS HERE--></p>
-                <p>Breed: Unicorn <!--EJS HERE--></p>
-              </section>
-              <section class="options">
-                <span class="fa-layers altered">
-                  <i class="fas fa-cut"></i>
-                </span>
-                <span class="fa-layers hasShots">
-                  <i class="fas fa-syringe"></i>
-                </span>
-                <span class="fa-layers housetrained">
-                  <i class="fas fa-toilet"></i>
-                </span>
-                <!-- <img class="noKids" src="images/noKids.png">
-                <img class="noCats" src="images/noCats.png"> -->
-                <span class="fa-layers noCats">
-                  <i class="fas fa-cat"></i>
-                  <i class="fa-inverse fas fa-ban"></i>
-                </span>
-                <span class="fa-layers fa-fw noKids">
-                  <i class="fas fa-baby"></i>
-                  <i class="fa-inverse fas fa-ban"></i>
-                </span>
-              </section> 
-              <section class="forms-section">
-                
-                <form class="wooflist-form" action="#" method="GET"> <!--This is a placeholder-->
-                <input class="button detail-button" type="submit" value="View Details">
-                </form>
-
-                <form class="wooflist-form" action="#" method="POST"> <!--This is a placeholder-->
-                  <input class="button delete-button" type="submit" value="Delete">
-                </form>
-
-              </section> 
-
-          </section>
-          </li>
-<!--=============START OF TEST DATA==============--> 
-          <li class="woof-list-dog">
+          <!-- <% likedDogs.forEach(likedDog => { %>
+            <li class="woof-list-dog">
               <div class="wooflist-image-div">
-                <img class="woof-list-img" src="images/test-dog-1.jpg">
+                <img class="woof-list-img" src="<%=likedDogs.picture%>">
               </div>
               <img class="available"> <!--this will hide/show--> 
               <section class="list-section">
-                <section class="wooflist-p">
-                    <img class="available" src="images/adopted.png"> <!--this will hide/show--> 
-                  <p>Name: Shadow <!--EJS HERE--></p>
-                  <p>Age: 200 (in dog years) <!--EJS HERE--></p>
-                  <p>Breed: Unicorn <!--EJS HERE--></p>
+                <section class="wooflist-p"> -->
+                  <!-- <img class="available" src="images/adopted.png" <%if(likedDog.isAdopted === 'X' || likedDog.name.toUpperCase.includes('ADOPTED'){NEEDS DOM MANIPULATION OR OTHER}%> -->
+                  <!-- <p>Name: <%=likedDog.name%></p>
+                  <p>Age: <%=likedDog.age%></p>
+                  <p>Breed: <%=likedDog.breed%></p> -->
                 </section>
                 <section class="options">
-                  <img class="altered"> <!--this will hide/show--> 
-                  <img class="noCats"> <!--this will hide/show--> 
-                  <img class="noKids"> <!--this will hide/show--> 
-                  <img class="hasShots"> <!--this will hide/show--> 
-                  <img class="housetrained"> <!--this will hide/show-->
+                  <span class="fa-layers altered">
+                    <i class="fas fa-cut"></i>
+                  </span>
+                  <span class="fa-layers hasShots">
+                    <i class="fas fa-syringe"></i>
+                  </span>
+                  <span class="fa-layers housetrained">
+                    <i class="fas fa-toilet"></i>
+                  </span>
+                  <span class="fa-layers noCats">
+                    <i class="fas fa-cat"></i>
+                    <i class="fa-inverse fas fa-ban"></i>
+                  </span>
+                  <span class="fa-layers fa-fw noKids">
+                    <i class="fas fa-baby"></i>
+                    <i class="fa-inverse fas fa-ban"></i>
+                  </span>
                 </section> 
+                
                 <section class="forms-section">
-
+                  
                   <form class="wooflist-form" action="#" method="GET"> <!--This is a placeholder-->
-                  <input class="button" type="submit" value="View Details">
+                  <input class="button detail-button" type="submit" value="View Details">
                   </form>
 
                   <form class="wooflist-form" action="#" method="POST"> <!--This is a placeholder-->
-                    <input class="button" type="submit" value="Delete">
+                    <input class="button delete-button" type="submit" value="Delete">
                   </form>
 
                 </section> 
 
             </section>
             </li>
-            <li class="woof-list-dog">
-                <div class="wooflist-image-div">
-                  <img class="woof-list-img" src="images/test-dog-5.jpg">
-                </div>
-                <section class="list-section">
-                  <section class="wooflist-p">
-                    <img class="available" src="images/adopted.png"> <!--this will hide/show--> 
-                    <p>Name: Shadow <!--EJS HERE--></p>
-                    <p>Age: 200 (in dog years) <!--EJS HERE--></p>
-                    <p>Breed: Unicorn <!--EJS HERE--></p>
-                  </section>
-                  <section class="options">
-                    <img class="altered"> <!--this will hide/show--> 
-                    <img class="noCats"> <!--this will hide/show--> 
-                    <img class="noKids"> <!--this will hide/show--> 
-                    <img class="hasShots"> <!--this will hide/show--> 
-                    <img class="housetrained"> <!--this will hide/show-->
-                  </section> 
-                  <section class="forms-section">
-
-                    <form class="wooflist-form" action="#" method="GET"> <!--This is a placeholder-->
-                    <input class="button" type="submit" value="View Details">
-                    </form>
-
-                    <form class="wooflist-form" action="#" method="POST"> <!--This is a placeholder-->
-                      <input class="button" type="submit" value="Delete">
-                    </form>
-
-                  </section> 
-
-              </section>
-              </li>
-<!--=============END OF TEST DATA==============--> 
+          <% }) %> 
         </ul>
       </article>
-      <div id="key-container">
-          <ul id ="option-key">
-            <li class"key-item">
-              <span class="fa-layers altered">
-                <i class="fas fa-cut"></i>
-              </span>
-              Spayed/Neutered
-            </li>
-            <li class"key-item">
-              <span class="fa-layers hasShots">
-                <i class="fas fa-syringe"></i>
-              </span>
-              Has Shots
-            </li>
-            <li class"key-item">
-              <span class="fa-layers housetrained">
-                <i class="fas fa-toilet"></i>
-              </span>
-              House Trained
-            </li>
-            <li class"key-item">
-              <span class="fa-layers noCats">
-                <i class="fas fa-cat"></i>
-                <i class="fa-inverse fas fa-ban"></i>
-              </span>
-              No Cats
-            </li>
-            <li class"key-item">
-              <span class="fa-layers fa-fw noKids">
-                <i class="fas fa-baby"></i>
-                <i class="fa-inverse fas fa-ban"></i>
-              </span>
-              No Kids
-            </li>
-        </ul>
-        </div>
+      <%-include ../../layout/footer%>
     </main>
 
 </body>

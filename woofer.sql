@@ -12,7 +12,7 @@ CREATE TABLE dogs (
   availability VARCHAR(255),
   breed VARCHAR(255),
   mix VARCHAR(255),
-  photos VARCHAR(500),
+  photos TEXT,
   description TEXT,
   shelter_id VARCHAR(255)
 );
