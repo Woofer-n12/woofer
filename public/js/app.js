@@ -13,5 +13,10 @@ $('#search-button').on('click', function(){
   console.log('++++button clicked+++++');
 });
 
-
+//========================call wooflist===============================
+$('#wooflist').on('click', ()=>{
+  console.log('getting wooflist');
+  let uid= JSON.parse(localStorage.getItem('userId'));
+  $.post('/woof-list', {userId:`${uid}`});
+})
 

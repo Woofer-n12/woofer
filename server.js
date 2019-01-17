@@ -24,7 +24,7 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
-app.get('/woof-list', woofList);
+app.post('/woof-list', woofList);
 app.get('/dog-detail', dogDetail); //need to modify for a specific dog and add a click handler on wooflist
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
@@ -39,8 +39,25 @@ function aboutTeam(request, response){
 }
 // ===========================WOOF LIST==================================
 function woofList(request, response){
-  response.render('pages/wooflist/listShow');
+  console.log(`request = ${request[0]}`);
+  console.log(`generating wooflist for user with ID ${request.body.userId}`);
+  let id = request.body.userId;
+  let SQL=`SELECT likes FROM users WHERE id = $1`;
+  client.query(SQL,[id])
+    .then(data=>{
+      console.log(data.rows);
+      let likes = JSON.parse(data.rows[0].likes)
+      let SQLdog = `SELECT * FROM dogs WHERE dog_id = $1`
+      let likedDogs = likes.map((dogID)=>{
+        client.query(SQLdog,[dogID])
+          .then((result)=>{
+            return (new DBDog(result.rows[0]));
+          }).catch((err)=>{console.log(err)});
+      })
+      response.render('pages/wooflist/listShow',{likedDogs});
+    }).catch((err)=>{console.log(err)});
 }
+
 // =============================DOG DETAIL ================================
 function dogDetail(request,response){
   response.render('pages/wooflist/dogDetail');
@@ -76,9 +93,9 @@ function goDogs(req, res){
         dataArray.push(new Dog(ele));
       });
       let SQL = `INSERT INTO dogs
-      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
       dataArray.forEach(ele=>{
-        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID];
+        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
         client.query(SQL, values).catch(er => console.log(er));
       })
       res.render('pages/choices/dogShow.ejs', {dataArray});
@@ -163,7 +180,8 @@ function Dog(pet){
   this.mix = pet.mix.$t;
   this.picture = pet.media.photos.photo || 'images/connor-dog.png';
   this.description = pet.description.$t;
-  this.options(pet);
+  this.options(pet)
+  this.opt=pet.options.option;
 }
 Dog.prototype.options = function(pet){
   if (Array.isArray(pet.options.option)){

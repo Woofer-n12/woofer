@@ -14,7 +14,8 @@ CREATE TABLE dogs (
   mix VARCHAR(255),
   photos TEXT,
   description TEXT,
-  shelter_id VARCHAR(255)
+  shelter_id VARCHAR(255),
+  options VARCHAR (510)
 );
 
 CREATE TABLE users (
