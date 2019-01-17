@@ -38,21 +38,51 @@ function aboutTeam(request, response){
   response.render('pages/about');
 }
 // ===========================WOOF LIST==================================
+// function woofList(request, response){
+//   let likedDogs = [];
+//   let id = request.body.userId;
+//   let SQL=`SELECT likes FROM users WHERE id = $1`;
+//   client.query(SQL,[id])
+//     .then(data=>{
+//       let likes = JSON.parse(data.rows[0].likes)
+//       let SQLdog = `SELECT * FROM dogs WHERE dog_id = $1`
+//       likes.forEach((dogID)=>{
+//         client.query(SQLdog,[dogID])
+//           .then((result)=>{
+//             likedDogs.push(new DBDog(result.rows[0]));
+//           }).then(() => {
+//               console.log(`rendering wooflist`, likedDogs);
+//               response.render('pages/wooflist/listShow.ejs',{likedDogs});
+//             }) .catch((err)=>{console.log(err)});
+//           }).catch((err)=>{console.log(err)});
+//       })
+//     })
+// }
+
 function woofList(request, response){
+  let likedDogs = [];
   let id = request.body.userId;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
     .then(data=>{
       let likes = JSON.parse(data.rows[0].likes)
-      let SQLdog = `SELECT * FROM dogs WHERE dog_id = $1`
-      let likedDogs = likes.map((dogID)=>{
-        client.query(SQLdog,[dogID])
-          .then((result)=>{
-            return (new DBDog(result.rows[0]));
-          }).catch((err)=>{console.log(err)});
-      })
-      console.log(`rendering wooflist`);
-      response.render('pages/wooflist/listShow.ejs',{likedDogs});
+      let string = '(' + likes.join(', ') + ')'
+      // for(let i in likes) {
+      //   string += '$' + i + ',';
+      // }
+      // let nstring = string.substring(0, string.length - 1);
+      console.log(string);
+      let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${string})`;
+      client.query(SQL2, likes)
+        .then(result => {
+          result.rows.forEach(row => {
+            likedDogs.push(new DBDog(row[0]))
+          })
+        })
+        .then(() => {
+          console.log(`rendering wooflist`, likedDogs);
+          response.render('pages/wooflist/listShow.ejs',{likedDogs});
+        }).catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
 }
 
@@ -229,10 +259,11 @@ function DBDog(pet){
   this.mix = pet.mix;
   this.picture = pet.photos;//returns an array
   this.description = pet.description;
+  console.log(this);
 }
 DBDog.prototype.options = function(pet){
-  if (Array.isArray(pet.options.option)){
-    pet.options.option.forEach(ele => {
+  if (Array.isArray(pet.options)){
+    pet.options.forEach(ele => {
       if(ele.$t === 'noCats'){
         this.catFriendly = false;
       }else if(ele.$t === 'altered'){
@@ -245,8 +276,8 @@ DBDog.prototype.options = function(pet){
         this.kidFriendly = false;
       }
     });
-  }else if (pet.options.option){
-    let derp = pet.options.option;
+  }else if (pet.options){
+    let derp = pet.options;
     if(derp.$t === 'noCats'){
       this.catFriendly = false;
     }else if(derp.$t === 'altered'){
