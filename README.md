@@ -7,9 +7,9 @@ https://github.com/do-web/jTinder/blob/master/css/jTinder.css
 
 font awesome - needs better attribution
 
+Need to reference pixaby photos used
+
 @Media Breaks Needed
 at <410px - smaller than iphone 6
 at >768px - ipad
 at >1280 - laptop
-
-test
