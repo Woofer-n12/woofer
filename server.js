@@ -213,6 +213,54 @@ Dog.prototype.options = function(pet){
     }
   }
 }
+function DBDog(pet){
+  this.ID = pet.id;
+  this.locationID = pet.shelter_id;
+  this.name = pet.name;
+  this.age = pet.age;
+  this.gender = pet.gender;
+  this.housetrained = false;
+  this.size = pet.size.$t;
+  this.fixed = false;
+  this.catFriendly = true;
+  this.kidFriendly = true;
+  this.vaccinated = false;
+  this.isAdopted = pet.availability;
+  this.breed = pet.breed;
+  this.mix = pet.mix;
+  this.picture = pet.photos;//returns an array
+  this.description = pet.description;
+}
+DBDog.prototype.options = function(pet){
+  if (Array.isArray(pet.options.option)){
+    pet.options.option.forEach(ele => {
+      if(ele.$t === 'noCats'){
+        this.catFriendly = false;
+      }else if(ele.$t === 'altered'){
+        this.fixed = true;
+      }else if(ele.$t === 'hasShots'){
+        this.vaccinated = true;
+      }else if(ele.$t === 'housetrained'){
+        this.housetrained = true;
+      }else if(ele.$t === 'noKids'){
+        this.kidFriendly = false;
+      }
+    });
+  }else if (pet.options.option){
+    let derp = pet.options.option;
+    if(derp.$t === 'noCats'){
+      this.catFriendly = false;
+    }else if(derp.$t === 'altered'){
+      this.fixed = true;
+    }else if(derp.$t === 'hasShots'){
+      this.vaccinated = true;
+    }else if(derp.$t === 'housetrained'){
+      this.housetrained = true;
+    }else if(derp.$t === 'noKids'){
+      this.kidFriendly = false;
+    }
+  }
+}
 function Shelter(shelter){
   this.shelters_id = shelter.id.$t;
   this.name = shelter.name.$t;
