@@ -51,13 +51,13 @@ function aboutTeam(request, response){
 //           .then((result)=>{
 //             likedDogs.push(new DBDog(result.rows[0]));
 //           }).then(() => {
-//               console.log(`rendering wooflist`, likedDogs);
-//               response.render('pages/wooflist/listShow.ejs',{likedDogs});
-//             }) .catch((err)=>{console.log(err)});
-//           }).catch((err)=>{console.log(err)});
-//       })
+//             console.log(`rendering wooflist`, likedDogs);
+//             response.render('pages/wooflist/listShow.ejs',{likedDogs});
+//           }) .catch((err)=>{console.log(err)});
+//       }).catch((err)=>{console.log(err)});
 //     })
 // }
+
 
 function woofList(request, response){
   let likedDogs = [];
