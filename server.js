@@ -26,6 +26,7 @@ app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
+app.post('/wooflist', goWoofList);
 
 
 //================================HOME=======================================
@@ -33,8 +34,8 @@ function goHome(req, res){
   res.render('pages/index.ejs');
 }
 //=============================ABOUT US ===================================
-function aboutTeam(request, response){
-  response.render('pages/about');
+function aboutTeam(req, res){
+  res.render('pages/about');
 }
 //==================CHECK USER===========================================
 function makeUser(req, res){
@@ -58,7 +59,7 @@ function makeUser(req, res){
 //==============================SEARCH=====================================
 function goDogs(req, res){
   searchApiForShelters(req.body.search);
-  let dataArray = searchApiForDogs(req.body.search)
+  return searchApiForDogs(req.body.search)
   res.render('pages/choices/dogShow.ejs', {dataArray});
 }
 function searchApiForShelters(zip){
@@ -122,7 +123,7 @@ function likeDog(req, res){
       console.log(err);
     });
 }
-
+//======================VIEW DOGS===============================================================
 function viewDog(req,res){
   let userid=req.body.userId;
   let dogid=req.body.dogId;
@@ -139,7 +140,10 @@ function viewDog(req,res){
       console.log(err);
     });
 }
-
+//===============================WOOFLIST==============================================
+function goWoofList(req, res){
+  console.log(req.body.userId);
+}
 
 //==================CONSTRUCTORS=================================
 function Dog(pet){
