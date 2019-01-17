@@ -128,6 +128,7 @@ h2 {
 }
 
 .dogShow-detailForm input {
+  border-radius: 0;
   width: 91%;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -147,8 +148,11 @@ h2 {
 
 
 .form-description, textarea {
-  width: 600px;
-  overflow:hidden scroll;
+  border-radius: 0;
+  width: 299px;
+  overflow:hidden;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch
 }
 
 /* IPAD */
