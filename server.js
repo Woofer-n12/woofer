@@ -39,13 +39,10 @@ function aboutTeam(request, response){
 }
 // ===========================WOOF LIST==================================
 function woofList(request, response){
-  console.log(`request = ${request[0]}`);
-  console.log(`generating wooflist for user with ID ${request.body.userId}`);
   let id = request.body.userId;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
     .then(data=>{
-      console.log(data.rows);
       let likes = JSON.parse(data.rows[0].likes)
       let SQLdog = `SELECT * FROM dogs WHERE dog_id = $1`
       let likedDogs = likes.map((dogID)=>{
@@ -54,7 +51,8 @@ function woofList(request, response){
             return (new DBDog(result.rows[0]));
           }).catch((err)=>{console.log(err)});
       })
-      response.render('pages/wooflist/listShow',{likedDogs});
+      console.log(`rendering wooflist`);
+      response.render('pages/wooflist/listShow.ejs',{likedDogs});
     }).catch((err)=>{console.log(err)});
 }
 
@@ -93,11 +91,12 @@ function goDogs(req, res){
         dataArray.push(new Dog(ele));
       });
       let SQL = `INSERT INTO dogs
-      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
       dataArray.forEach(ele=>{
         let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
         client.query(SQL, values).catch(er => console.log(er));
       })
+    }).then(()=>{
       res.render('pages/choices/dogShow.ejs', {dataArray});
     }).catch(err => {
       console.log(err);
