@@ -7,7 +7,7 @@
 <body id="index">
 
   <header>
-    <%-include ../layout/nav%>
+    <%-include ../layout/nav-index%>
   </header>
   <main>
     <section>
@@ -16,6 +16,7 @@
     </section>
     <form action='/available-dogs' method='post'>
       <input id="location-input" type="text" name="search" placeholder="ZIPCODE   SEARCH" required>
+      <input id='unameit' class="something" value='' name='username'>
       <input id="search-button" type="submit" value="SEARCH DOGS">
     </form>
 

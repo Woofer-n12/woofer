@@ -3,7 +3,7 @@
 
 <head>
   <%-include ../../layout/head%>
-    <title>Dog Information</title>
+    <title>Detailed Dog Information</title>
     <meta name="format-detection" content="telephone=no">
 </head>
 
@@ -17,19 +17,19 @@
   <main id="dogDetail-main">
     <div class="dogDetail-main-div">
       <div class="dogDetail-name-div">
-        <h2 class="dogDetail-heading">All About DOG NAME</h2>
+        <h2 class="dogDetail-heading">All About <%=dogDeets[0].name%></h2>
       </div>
       <div class="dogDetail-all-dog-info">
         <div class="dogDetail-img-div">
-          <img src="images/nicole-dog.png" alt="Picture of DOG!!" class="dogDetail-img">
+          <img src="<%=dogDeets[0].picture[3].$t%>" alt="Picture of <%=dogDeets[0].name%>!!" class="dogDetail-img">
         </div>
         <div class="dogDetail-info-div">
           <ul class="dogDetail-info-ul">
-            <li>Age: 2000 YRS OLD</li>
-            <li>Gender: UNKNOWN</li>
-            <li>Size: GINOURMOUS</li>
-            <li>Breed: DRAGON</li>
-            <li>Mix: YES</li>
+            <li>Age: <%=dogDeets[0].age%></li>
+            <li>Gender: <%=dogDeets[0].gender%></li>
+            <li>Size: <%dogDeets[0].size%></li>
+            <li>Breed: <%=dogDeets[0].breed%></li>
+            <li>Mix: <%=dogDeets[0].mix%></li>
           </ul>
           <section class="options dogDetail-options">
               <span class="fa-layers altered">
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="dogDetail-description">
-        <p>Biography: Abjuration augmented subtype blown away compulsion fortitude save melee attack roll natural armor bonus negative energy paralyzed rune domain standard action subject subschool threat range turn turning damage. Blindsense command undead critical roll difficulty class drow domain enchantment lawful pattern subschool rake regeneration rogue scribe sonic attack unarmed strike. Barbarian chaotic subtype checked direct a spell falling objects fighter improved grab lawful light weapon living construct subtype nonplayer character range penalty reflex save result spell-like ability summoning subschool swarm subtype tanar'ri subtype threatened square. Abjuration augmented subtype blown away compulsion fortitude save melee attack roll natural armor bonus negative energy paralyzed rune domain standard action subject subschool threat range turn turning damage. Blindsense command undead critical roll difficulty class drow domain enchantment lawful pattern subschool rake regeneration rogue scribe sonic attack unarmed strike. Barbarian chaotic subtype checked direct a spell falling objects fighter improved grab lawful light weapon living construct subtype nonplayer character range penalty reflex save result spell-like ability summoning subschool swarm subtype tanar'ri subtype threatened square. Abjuration augmented subtype blown away compulsion fortitude save melee attack roll natural armor bonus negative energy paralyzed rune domain standard action subject subschool threat range turn turning damage. Blindsense command undead critical roll difficulty class drow domain enchantment lawful pattern subschool rake regeneration rogue scribe sonic attack unarmed strike. Barbarian chaotic subtype checked direct a spell falling objects fighter improved grab lawful light weapon living construct subtype nonplayer character range penalty reflex save result spell-like ability summoning subschool swarm subtype tanar'ri subtype threatened square. 
+        <p>Biography: <%=dogDeets[0].description%> 
         </p>
       </div>
       <div>
@@ -61,10 +61,10 @@
           <h2 class="dogDetail-heading">Rescue Organization</h2>
         </div>
         <ul class="shelter-info">
-          <li>Name: DRAGONS R US</li>
-          <li class="shelter-sub-info">Phone: <a class="a-tag" href="tel:+1 (555) 555-5555">(555) 555-5555</a></li>
-          <li class="shelter-sub-info">Location: NEVERLAND, UK 98765</li>
-          <li>Email: <a class="a-tag"href="mailto:DRAGONS_R_US@DRAGONRESCUEUK.COM?subject=Adoption Inquiry about DOG NAME">DRAGONS_R_US@DRAGONRESCUEUK.COM</a></li>
+          <li>Name: <%=dogDeets[1].name%></li>
+          <li class="shelter-sub-info">Phone: <a class="a-tag" href="tel:+1 <%=dogDeets[1].phone%>"><%=dogDeets[1].phone%></a></li>
+          <li class="shelter-sub-info">Location: <%=dogDeets[1].city%>, <%=dogDeets[1].state%> <%=dogDeets[1].zip%></li>
+          <li>Email: <a class="a-tag"href="mailto:<%=dogDeets[1].email%>?subject=Adoption Inquiry to <%=dogDeets[1].name%> about <%=dogDeets[0].name%>"><%=dogDeets[1].email%></a></li>
         </ul>
       </div>
     </div>
@@ -75,6 +75,3 @@
 </body>
 
 </html>
-
-
-<a href="tel:+"></a>

@@ -24,8 +24,9 @@ app.get('/', goHome);
 app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
-app.get('/woof-list', woofList);
-app.get('/dog-detail', dogDetail); //need to modify for a specific dog and add a click handler on wooflist
+app.post('/woof-list', woofList);
+app.get('/dog-detail', dogDetail);
+// app.get('/remove-dog', removeDog);
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
 
@@ -38,14 +39,99 @@ function aboutTeam(request, response){
   response.render('pages/about');
 }
 // ===========================WOOF LIST==================================
+
 function woofList(request, response){
-  response.render('pages/wooflist/listShow');
-}
-// =============================DOG DETAIL ================================
-function dogDetail(request,response){
-  response.render('pages/wooflist/dogDetail');
+  let likedDogs = [];
+  console.log(request.body);
+  let id = request.body.username;
+  let SQL=`SELECT likes FROM users WHERE id = $1`;
+  client.query(SQL,[id])
+    .then(data=>{
+      let likes = JSON.parse(data.rows[0].likes)
+      let string = ''
+      for(let i=1 ; i<=likes.length; i++) {
+        string += '$' + i + ', ';
+      }
+      let nstring = string.substring(0, string.length-2);
+      console.log(nstring);
+      let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
+      client.query(SQL2, likes)
+        .then(result => {
+          result.rows.forEach(row => {
+            likedDogs.push(new DBDog(row))
+            console.log(`new dog created, ${likedDogs.length}`)
+          })
+          console.log(`rendering wooflist`);
+          response.render('pages/wooflist/listShow.ejs',{likedDogs});
+        }).catch((err)=>{console.log(err)});
+    }).catch((err)=>{console.log(err)});
 }
 
+// =============================DOG DETAIL ================================
+function dogDetail(req,res){
+  let SQL = `SELECT * FROM dogs WHERE dog_id=$1`;
+  let dogId = req.url.substring(req.url.length-8, req.url.length);
+  client.query(SQL, [dogId])
+    .then(data => {
+      let dog = new DBDog(data.rows[0]);
+      let SQL = `SELECT * FROM shelters WHERE shelters_id=$1`;
+      client.query(SQL, [dog.loactionID])
+        .then(data => {
+          if(data.rows[0]){
+            let shelterDeet = new DBShelter(data.rows[0]);
+            let dogDeets = [dog, shelterDeet];
+            console.log(dogDeets, 'i am a dog');
+            res.render('pages/wooflist/dogDetail', {dogDeets});
+          }else{
+            superAgent.get(`http://api.petfinder.com/shelter.get?key=${process.env.PET_KEY}&format=json&id=${dog.locationID}`)
+              .then(data => {
+                let shelterDeet = new IndiShelter(data.body.petfinder.shelter);
+                let SQL = `INSERT INTO shelters
+                            (shelters_id, name, city, state, zip, phone, email)
+                            VALUES ($1, $2, $3, $4, $5, $6, $7)
+                            RETURNING id`;
+                let values = [shelterDeet.shelters_id, shelterDeet.name, shelterDeet.city, shelterDeet.state, shelterDeet.zip, shelterDeet.phone, shelterDeet.email];
+                client.query(SQL, values).catch(err=>{
+                  console.log(err);
+                });
+                let dogDeets = [dog, shelterDeet];
+                console.log(dogDeets, 'i am a dog');
+                res.render('pages/wooflist/dogDetail', {dogDeets});
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+//==================REMOVE DOGS==========================================
+function removeDog(req, res){
+  let SQL = `SELECT likes FROM users WHERE id=$1`;
+  client.query(SQL, req.body.uId)
+    .then(data => {
+      let newData = JSON.parse(data);
+      let newerData = newData.filter(ele => {
+        return ele !== req.body.dogId; 
+      });
+      let SQL = `UPDATE users
+                  SET likes=$1
+                  WHERE id=$2`;
+      let values = [JSON.stringify(newerData), req.body.uId];           
+      client.query(SQL, values)
+      res.redirect('/woof-list');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
@@ -69,6 +155,8 @@ function makeUser(req, res){
 
 function goDogs(req, res){
   let dataArray = [];
+  let views=[];
+  let dataarr=[]
   searchApiForShelters(req.body.search);
   superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
     .then(data=>{
@@ -76,16 +164,29 @@ function goDogs(req, res){
         dataArray.push(new Dog(ele));
       });
       let SQL = `INSERT INTO dogs
-      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                ON CONFLICT DO NOTHING`;
       dataArray.forEach(ele=>{
-        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID];
+        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
         client.query(SQL, values).catch(er => console.log(er));
       })
-      res.render('pages/choices/dogShow.ejs', {dataArray});
+    }).then(()=>{
+      client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
+        .then(data=>{
+          views=JSON.parse(data.rows[0].views);
+          dataarr.push(views);
+          dataarr.push(dataArray);
+          console.log(dataArray[0].locationID);
+          res.render('pages/choices/dogShow.ejs', {dataarr});
+        }).catch(err => {
+          console.log(err);
+        })
     }).catch(err => {
       console.log(err);
-    });
+    })
 }
+
 
 function searchApiForShelters(zip){
   return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`)
@@ -163,7 +264,8 @@ function Dog(pet){
   this.mix = pet.mix.$t;
   this.picture = pet.media.photos.photo || 'images/connor-dog.png';
   this.description = pet.description.$t;
-  this.options(pet);
+  this.options(pet)
+  this.opt=pet.options.option;
 }
 Dog.prototype.options = function(pet){
   if (Array.isArray(pet.options.option)){
@@ -195,7 +297,76 @@ Dog.prototype.options = function(pet){
     }
   }
 }
+function DBDog(pet){
+  this.ID = pet.dog_id;
+  this.locationID = pet.shelter_id;
+  this.name = pet.name;
+  this.age = pet.age;
+  this.gender = pet.gender;
+  this.housetrained = false;
+  this.size = pet.size.$t;
+  this.fixed = false;
+  this.catFriendly = true;
+  this.kidFriendly = true;
+  this.vaccinated = false;
+  this.isAdopted = pet.availability;
+  this.breed = pet.breed;
+  this.mix = pet.mix;
+  this.picture = pet.photos;//returns an array
+  this.description = pet.description;
+  // console.log(this);
+}
+DBDog.prototype.options = function(pet){
+  if (Array.isArray(pet.options)){
+    pet.options.forEach(ele => {
+      if(ele.$t === 'noCats'){
+        this.catFriendly = false;
+      }else if(ele.$t === 'altered'){
+        this.fixed = true;
+      }else if(ele.$t === 'hasShots'){
+        this.vaccinated = true;
+      }else if(ele.$t === 'housetrained'){
+        this.housetrained = true;
+      }else if(ele.$t === 'noKids'){
+        this.kidFriendly = false;
+      }
+    });
+  }else if (pet.options){
+    let derp = pet.options;
+    if(derp.$t === 'noCats'){
+      this.catFriendly = false;
+    }else if(derp.$t === 'altered'){
+      this.fixed = true;
+    }else if(derp.$t === 'hasShots'){
+      this.vaccinated = true;
+    }else if(derp.$t === 'housetrained'){
+      this.housetrained = true;
+    }else if(derp.$t === 'noKids'){
+      this.kidFriendly = false;
+    }
+  }
+}
 function Shelter(shelter){
+  this.shelters_id = shelter.id.$t;
+  this.name = shelter.name.$t;
+  this.city = shelter.city.$t;
+  this.state = shelter.state.$t;
+  this.zip = shelter.zip.$t;
+  this.phone = shelter.phone.$t;
+  this.email = shelter.email.$t;
+}
+
+function DBShelter(shelter){
+  this.shelters_id = shelter.shelters_id;
+  this.name = shelter.name;
+  this.city = shelter.city;
+  this.state = shelter.state;
+  this.zip = shelter.zip;
+  this.phone = shelter.phone;
+  this.email = shelter.email;
+}
+
+function IndiShelter(shelter){
   this.shelters_id = shelter.id.$t;
   this.name = shelter.name.$t;
   this.city = shelter.city.$t;

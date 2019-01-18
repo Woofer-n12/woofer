@@ -13,7 +13,7 @@ $(function () {
       // set the status text
       console.log(item[0].classList[1]);
       onSwipe(item);
-      $('#status').html('Dislike image ' + (item.index() + 1));
+      // $('#status').html('Dislike image ' + (item.index() + 1));
       let userID = JSON.parse(localStorage.getItem('userId'));
       $.post('/dogviewed', { userId: `${userID}`, dogId: `${item[0].classList[1]}` });
     },
@@ -22,7 +22,7 @@ $(function () {
       // set the status text
       onSwipe(item);
       console.log(item[0].classList[1]);
-      $('#status').html('Like image ' + (item.index() + 1));
+      // $('#status').html('Like image ' + (item.index() + 1));
       let userID = JSON.parse(localStorage.getItem('userId'));
       $.post('/likedog', { userId: `${userID}`, dogId: `${item[0].classList[1]}` });
     },

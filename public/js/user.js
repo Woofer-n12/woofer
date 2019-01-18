@@ -2,6 +2,6 @@
 
 $(function(){
   console.log('indx2');
-  let ok = $('#something').html();
+  let ok = $('#something-else').html();
   localStorage.setItem('userId', JSON.stringify(ok));
 });
