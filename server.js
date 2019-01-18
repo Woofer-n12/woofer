@@ -61,26 +61,27 @@ function aboutTeam(request, response){
 
 function woofList(request, response){
   let likedDogs = [];
-  let id = request.body.userId;
+  console.log(request.body);
+  let id = request.body.username;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
     .then(data=>{
       let likes = JSON.parse(data.rows[0].likes)
-      let string = '(' + likes.join(', ') + ')'
-      // for(let i in likes) {
-      //   string += '$' + i + ',';
-      // }
-      // let nstring = string.substring(0, string.length - 1);
-      console.log(string);
-      let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${string})`;
+      let string = ''
+      for(let i=1 ; i<=likes.length; i++) {
+        string += '$' + i + ', ';
+      }
+
+      let nstring = string.substring(0, string.length-2);
+      console.log(nstring);
+      let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
-            likedDogs.push(new DBDog(row[0]))
+            likedDogs.push(new DBDog(row))
+            console.log(`new dog created, ${likedDogs.length}`)
           })
-        })
-        .then(() => {
-          console.log(`rendering wooflist`, likedDogs);
+          console.log(`rendering wooflist`);
           response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
@@ -243,7 +244,7 @@ Dog.prototype.options = function(pet){
   }
 }
 function DBDog(pet){
-  this.ID = pet.id;
+  this.ID = pet.dog_id;
   this.locationID = pet.shelter_id;
   this.name = pet.name;
   this.age = pet.age;
@@ -259,7 +260,7 @@ function DBDog(pet){
   this.mix = pet.mix;
   this.picture = pet.photos;//returns an array
   this.description = pet.description;
-  console.log(this);
+  // console.log(this);
 }
 DBDog.prototype.options = function(pet){
   if (Array.isArray(pet.options)){

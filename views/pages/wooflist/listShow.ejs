@@ -21,15 +21,14 @@
       
       <article>
         <ul>
+        <%console.log('running listshow')%>
           <% likedDogs.forEach(likedDog => { %>
             <li class="woof-list-dog">
               <div class="wooflist-image-div">
-                <!-- <img class="woof-list-img" src="<%=likedDogs.picture%>"> -->
               </div>
               <img class="available"> <!--this will hide/show -->
               <section class="list-section">
                 <section class="wooflist-p">
-                  <!-- <img class="available" src="images/adopted.png" <%if(likedDog.isAdopted === 'X' || likedDog.name.toUpperCase.includes('ADOPTED'){NEEDS DOM MANIPULATION OR OTHER}%> -->
                   <p>Name: <%=likedDog.name%></p>
                   <p>Age: <%=likedDog.age%></p>
                   <p>Breed: <%=likedDog.breed%></p>
@@ -73,6 +72,5 @@
       </article>
       <%-include ../../layout/footer%>
     </main>
-
 </body>
 </html>

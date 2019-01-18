@@ -14,9 +14,9 @@ $('#search-button').on('click', function(){
 });
 
 //========================call wooflist===============================
-$('#wooflist').on('click', ()=>{
-  console.log('getting wooflist');
-  let uid= JSON.parse(localStorage.getItem('userId'));
-  $.post('/woof-list', {userId:`${uid}`});
+$('#wooflistformsubmit').on('click', ()=>{
+  console.log(JSON.parse(localStorage.getItem('userId')));
+  $('#lsun').attr('value',`${JSON.parse(localStorage.getItem('userId'))}`);
+  $('#wooflistformform').click();
 })
 
