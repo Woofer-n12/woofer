@@ -28,7 +28,7 @@
                 <img class="woof-list-img" src="images/erin-dog.png">
               </div>
               <img class="available"> <!--this will hide/show -->
-              <section class="list-section">
+              <section class="list-section" id="woof-list-section">
                 <section class="wooflist-p">
                   <p>Name: <%=likedDog.name%></p>
                   <p>Age: <%=likedDog.age%></p>
@@ -54,7 +54,7 @@
                   </span>
                 </section> 
                 
-                <section class="forms-section">
+                <section class="forms-section woof-list-forms-section">
                   
                   <form class="wooflist-form" action="/dog-detail" method="GET"> 
                       <input type="hidden" value="<%=likedDog.ID%>" name="dogId">
