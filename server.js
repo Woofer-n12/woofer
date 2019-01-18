@@ -29,6 +29,7 @@ app.get('/dog-detail', dogDetail); //need to modify for a specific dog and add a
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
 
+
 //================================HOME=======================================
 function goHome(req, res){
   res.render('pages/index.ejs');
@@ -67,10 +68,45 @@ function woofList(request, response){
 }
 
 // =============================DOG DETAIL ================================
-function dogDetail(request,response){
-  response.render('pages/wooflist/dogDetail');
+function dogDetail(req,res){
+  let SQL = `SELECT * FROM dogs WHERE dog_id=$1`;
+  let dogId = req.body.dogId;
+  return client.query(SQL, [dogId])
+  .then(data => {
+    return new DBDog(data.rows[0]);
+  })
+  .then(dog => {
+    let SQL = `SELECT * FROM shelters WHERE shelters_id=$1`;
+    return client.query(SQL, [dog.loactionID])
+    .then(data => {
+      if(data.rows[0]){
+        let shelterDeet = new DBShelter(data.rows[0]);
+        res.render('pages/wooflist/dogDetail', {dogDeets: dog, shelterDeets: shelterDeet});
+      }else{
+        superAgent.get(`http://api.petfinder.com/shelter.get?key=${process.env.PET_KEY}&format=json&id=${dog.locationID}`)
+        .then(data => {
+          let shelterDeet = new IndiShelter(data.body.petfinder.shelter);
+          let SQL = `INSERT INTO shelters
+                (shelters_id, name, city, state, zip, phone, email)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING id`;
+          let values = [shelterDeet.shelters_id, shelterDeet.name, shelterDeet.city, shelterDeet.state, shelterDeet.zip, shelterDeet.phone, shelterDeet.email];
+          client.query(SQL, values);
+          res.render('pages/wooflist/dogDetail', {dogDeets: dog, shelterDeets: shelterDeet});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
 }
-
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
@@ -282,3 +318,23 @@ function Shelter(shelter){
 }
 //===========================Listener============================
 app.listen(PORT, () => console.log(`APP is up on PORT : ${PORT}`));
+
+function DBShelter(shelter){
+  this.shelters_id = shelter.shelters_id;
+  this.name = shelter.name;
+  this.city = shelter.city;
+  this.state = shelter.state;
+  this.zip = shelter.zip;
+  this.phone = shelter.phone;
+  this.email = shelter.email;
+}
+
+function IndiShelter(shelter){
+  this.shelters_id = shelter.id.$t;
+  this.name = shelter.name.$t;
+  this.city = shelter.city.$t;
+  this.state = shelter.state.$t;
+  this.zip = shelter.zip.$t;
+  this.phone = shelter.phone.$t;
+  this.email = shelter.email.$t;
+}
