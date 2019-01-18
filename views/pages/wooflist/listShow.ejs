@@ -55,12 +55,15 @@
                 
                 <section class="forms-section">
                   
-                  <form class="wooflist-form" action="#" method="GET"> <!--This is a placeholder-->
+                  <form class="wooflist-form" action="/dog-detail" method="GET"> 
+                  <input type="hidden" value="<%=likedDog.ID%>" name="dogId">
                   <input class="button detail-button" type="submit" value="View Details">
                   </form>
 
-                  <form class="wooflist-form" action="#" method="POST"> <!--This is a placeholder-->
-                    <input class="button delete-button" type="submit" value="Delete">
+                  <form class="wooflist-form" action="/remove-dog" method="PUT">
+                  <input type="hidden" value="<%=likedDog.ID%>" name="dogId">
+                  <input type="hidden" value="" name="uId" class="store-uId">
+                  <input class="button delete-button" type="submit" value="update">
                   </form>
 
                 </section> 
