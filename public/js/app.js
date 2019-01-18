@@ -15,6 +15,7 @@ $('#search-button').on('click', function(){
 
 //========================call wooflist===============================
 $('#wooflistformsubmit').on('click', ()=>{
+  console.log('click!');
   console.log(JSON.parse(localStorage.getItem('userId')));
   $('#lsun').attr('value',`${JSON.parse(localStorage.getItem('userId'))}`);
   $('#wooflistformform').click();

@@ -51,7 +51,6 @@ function woofList(request, response){
       for(let i=1 ; i<=likes.length; i++) {
         string += '$' + i + ', ';
       }
-
       let nstring = string.substring(0, string.length-2);
       console.log(nstring);
       let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
