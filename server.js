@@ -67,8 +67,17 @@ function woofList(request, response){
 }
 
 // =============================DOG DETAIL ================================
-function dogDetail(request,response){
-  response.render('pages/wooflist/dogDetail');
+function dogDetail(req,res){
+  let SQL = `SELECT * FROM dogs WHERE dog_id=$1`;
+  let dogId = req.body.dogId;
+  client.query(SQL, [dogId])
+    .then(data => {
+      let dogDeets = new DBDog(data.rows[0]);
+      res.render('pages/wooflist/dogDetail', dogDeets);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 //==================CHECK USER===========================================
