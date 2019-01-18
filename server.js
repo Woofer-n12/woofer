@@ -67,10 +67,18 @@ function woofList(request, response){
 }
 
 // =============================DOG DETAIL ================================
-function dogDetail(request,response){
-  response.render('pages/wooflist/dogDetail');
+function dogDetail(req,res){
+  let SQL = `SELECT * FROM dogs WHERE dog_id=$1`;
+  let dogId = req.body.dogId;
+  client.query(SQL, [dogId])
+    .then(data => {
+      let dogDeets = new DBDog(data.rows[0]);
+      res.render('pages/wooflist/dogDetail', dogDeets);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
-
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
@@ -94,6 +102,8 @@ function makeUser(req, res){
 
 function goDogs(req, res){
   let dataArray = [];
+  let views=[];
+  let dataarr=[]
   searchApiForShelters(req.body.search);
   superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
     .then(data=>{
@@ -101,17 +111,29 @@ function goDogs(req, res){
         dataArray.push(new Dog(ele));
       });
       let SQL = `INSERT INTO dogs
-      (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`
+                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                ON CONFLICT DO NOTHING`;
       dataArray.forEach(ele=>{
         let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
         client.query(SQL, values).catch(er => console.log(er));
       })
     }).then(()=>{
-      res.render('pages/choices/dogShow.ejs', {dataArray});
+      client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
+        .then(data=>{
+          views=JSON.parse(data.rows[0].views);
+          dataarr.push(views);
+          dataarr.push(dataArray);
+          console.log(dataArray[0].locationID);
+          res.render('pages/choices/dogShow.ejs', {dataarr});
+        }).catch(err => {
+          console.log(err);
+        })
     }).catch(err => {
       console.log(err);
-    });
+    })
 }
+
 
 function searchApiForShelters(zip){
   return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`)

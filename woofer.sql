@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS shelters;
 
 CREATE TABLE dogs (
   id SERIAL PRIMARY KEY,
-  dog_id VARCHAR,
+  dog_id VARCHAR unique,
   name VARCHAR (255),
   age VARCHAR (255),
   gender VARCHAR(255),
