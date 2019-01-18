@@ -18,7 +18,8 @@
             <!-- start jtinder container -->
             <div id="tinderslide">
                 <ul class="dogShow-ul">
-                    <% dataArray.forEach(dog => { %>
+                    <% dataarr[1].forEach(dog => { %>
+                    <%if (!dataarr[0].includes(dog.ID)){%>
                         <li class="dogShow-img <%=dog.ID%>">
                                 <div class="img" style="background-image: url(<%=dog.picture[3].$t%>)"></div>
                             <div><%=dog.name%></div>
@@ -63,6 +64,7 @@
                                         <input type="hidden" value="<%=dog.vaccinated  %>" name="hasShots">
                                     </form>
                                 </div>
+                        <%}%>
                     <% }) %>
                 </ul>
             </div>
