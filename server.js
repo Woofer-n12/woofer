@@ -66,13 +66,15 @@ function woofList(request, response){
   client.query(SQL,[id])
     .then(data=>{
       let likes = JSON.parse(data.rows[0].likes)
-      let string = '(' + likes.join(', ') + ')'
+      // let string = '(' + likes.join(', ') + ')'
+      let string = '\'' + likes.join('\' AND \'') + '\''
       // for(let i in likes) {
       //   string += '$' + i + ',';
       // }
       // let nstring = string.substring(0, string.length - 1);
       console.log(string);
-      let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${string})`;
+      // let SQL2 = `SELECT * FROM dogs WHERE dog_id IN ${string}`;
+      let SQL2 = `SELECT * FROM dogs WHERE dog_id = ${string}`;
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
