@@ -39,7 +39,6 @@ function aboutTeam(request, response){
 }
 // ===========================WOOF LIST==================================
 
-
 function woofList(request, response){
   let likedDogs = [];
   console.log(request.body);

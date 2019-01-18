@@ -14,6 +14,7 @@ body {
     height: 300px;
     padding: 9%;
     margin-top: 9%;
+    margin-right: 5px;
 }
 
 #tinderslide {
@@ -233,6 +234,7 @@ body {
         height: 600px;
         padding: 7%;
         margin-top: 2%;
+        margin-right: 0;
     }
     
     #tinderslide {
@@ -440,5 +442,7 @@ body {
         margin-top: 30px;
         font-weight: bold;
     }
+
+
     
 }
