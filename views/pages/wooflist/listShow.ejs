@@ -61,7 +61,9 @@
                       <input class="button detail-button" type="submit" value="View Details">
                   </form>
 
-                  <form class="wooflist-form" action="#" method="POST"> <!--This is a placeholder-->
+                  <form class="wooflist-form" action="/remove-dog" method="PUT">
+                    <input type="hidden" value="<%=likedDog.ID%>" name="dogId">
+                    <input type="hidden" value="" name="uId" class="store-uId">
                     <input class="button delete-button" type="submit" value="Delete">
                   </form>
 

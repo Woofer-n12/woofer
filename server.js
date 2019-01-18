@@ -25,7 +25,8 @@ app.post('/available-dogs', goDogs);
 app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
 app.post('/woof-list', woofList);
-app.get('/dog-detail', dogDetail); //need to modify for a specific dog and add a click handler on wooflist
+app.get('/dog-detail', dogDetail);
+// app.get('/remove-dog', removeDog);
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
 
@@ -105,6 +106,27 @@ function dogDetail(req,res){
         .catch(err => {
           console.log(err);
         });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+//==================REMOVE DOGS==========================================
+function removeDog(req, res){
+  let SQL = `SELECT likes FROM users WHERE id=$1`;
+  client.query(SQL, req.body.uId)
+    .then(data => {
+      let newData = JSON.parse(data);
+      let newerData = newData.filter(ele => {
+        return ele !== req.body.dogId; 
+      });
+      let SQL = `UPDATE users
+                  SET likes=$1
+                  WHERE id=$2`;
+      let values = [JSON.stringify(newerData), req.body.uId];           
+      client.query(SQL, values)
+      res.redirect('/woof-list');
     })
     .catch(err => {
       console.log(err);
