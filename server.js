@@ -38,26 +38,6 @@ function aboutTeam(request, response){
   response.render('pages/about');
 }
 // ===========================WOOF LIST==================================
-// function woofList(request, response){
-//   let likedDogs = [];
-//   let id = request.body.userId;
-//   let SQL=`SELECT likes FROM users WHERE id = $1`;
-//   client.query(SQL,[id])
-//     .then(data=>{
-//       let likes = JSON.parse(data.rows[0].likes)
-//       let SQLdog = `SELECT * FROM dogs WHERE dog_id = $1`
-//       likes.forEach((dogID)=>{
-//         client.query(SQLdog,[dogID])
-//           .then((result)=>{
-//             likedDogs.push(new DBDog(result.rows[0]));
-//           }).then(() => {
-//             console.log(`rendering wooflist`, likedDogs);
-//             response.render('pages/wooflist/listShow.ejs',{likedDogs});
-//           }) .catch((err)=>{console.log(err)});
-//       }).catch((err)=>{console.log(err)});
-//     })
-// }
-
 
 function woofList(request, response){
   let likedDogs = [];
@@ -71,7 +51,6 @@ function woofList(request, response){
       for(let i=1 ; i<=likes.length; i++) {
         string += '$' + i + ', ';
       }
-
       let nstring = string.substring(0, string.length-2);
       console.log(nstring);
       let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
