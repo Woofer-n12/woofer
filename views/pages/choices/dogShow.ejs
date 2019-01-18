@@ -20,6 +20,8 @@
                 <ul class="dogShow-ul">
                     <% dataarr[1].forEach(dog => { %>
                     <%if (!dataarr[0].includes(dog.ID)){%>
+                        <% console.log(dog.name.toUpperCase()) %>
+                        <%if (!dog.name.toUpperCase().includes('ADOPTED')){ %>
                         <li class="dogShow-img <%=dog.ID%>">
                                 <div class="img" style="background-image: url(<%=dog.picture[3].$t%>)"></div>
                             <div><%=dog.name%></div>
@@ -64,8 +66,9 @@
                                         <input type="hidden" value="<%=dog.vaccinated  %>" name="hasShots">
                                     </form>
                                 </div>
-                        <%}%>
-                    <% }) %>
+                        <% } %>    
+                    <% } %>
+                <% }) %>
                 </ul>
             </div>
             <!-- end jtinder container -->

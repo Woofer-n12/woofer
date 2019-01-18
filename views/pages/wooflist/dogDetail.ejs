@@ -61,10 +61,10 @@
           <h2 class="dogDetail-heading">Rescue Organization</h2>
         </div>
         <ul class="shelter-info">
-          <li>Name: <%dogDeets[1].name%></li>
+          <li>Name: <%=dogDeets[1].name%></li>
           <li class="shelter-sub-info">Phone: <a class="a-tag" href="tel:+1 <%=dogDeets[1].phone%>"><%=dogDeets[1].phone%></a></li>
           <li class="shelter-sub-info">Location: <%=dogDeets[1].city%>, <%=dogDeets[1].state%> <%=dogDeets[1].zip%></li>
-          <li>Email: <a class="a-tag"href="mailto:<%=dogDeets[1].email%>?subject=Adoption Inquiry about <%dogDeets[1].name%>"><%=dogDeets[1].email%></a></li>
+          <li>Email: <a class="a-tag"href="mailto:<%=dogDeets[1].email%>?subject=Adoption Inquiry to <%=dogDeets[1].name%> about <%=dogDeets[0].name%>"><%=dogDeets[1].email%></a></li>
         </ul>
       </div>
     </div>

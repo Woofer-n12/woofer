@@ -4,6 +4,7 @@
 
 $(function(){
   if (localStorage.getItem('userId')){
+    console.log(localStorage.getItem('userId'));
     $('#unameit').attr('value', JSON.parse(localStorage.getItem('userId')))
   }else{
     console.log('hello');
