@@ -266,7 +266,7 @@ function Dog(pet){
   this.isAdopted = pet.status.$t;
   this.breed = pet.breeds.breed.$t||'Unknown';
   this.mix = pet.mix.$t;
-  this.picture = pet.media.photos.photo || 'images/connor-dog.png';
+  this.picture = pet.media.photos.photo[3].$t || 'images/connor-dog.png';
   this.description = pet.description.$t;
   this.options(pet)
   this.opt=pet.options.option;
