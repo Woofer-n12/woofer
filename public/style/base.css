@@ -226,8 +226,14 @@ h2 {
 
 .woof-list-img {
   height: 100%;
-  margin-bottom: 10px;
-  position: relative;
+    margin-bottom: 10px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    /* height: 100%; */
+    width: 100%;
 }
 
 .about-us-image-div {
@@ -491,6 +497,12 @@ h2 {
     height: 100%;
     margin-bottom: 10px;
     position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    /* height: 100%; */
+    width: 100%;
   }
   
   .woof-list-dog {
@@ -591,7 +603,7 @@ h2 {
 
   p {
     margin-top: 10px;
-    font-size: 30px;
+    font-size: 25px !important;
     width: 100%;
   }
 
@@ -618,7 +630,8 @@ h2 {
     margin-left: 10px;
     margin: 0;
     flex-direction: row;
-    margin-top: 21px;
+    margin-top: 3px;
+    margin-bottom: 6px;
   }
   
   .fa-layers {
@@ -649,6 +662,7 @@ h2 {
     list-style: none;
     background:#cd661d;
     width: 100%;
+    margin-top: 10px;
   }
 
   .key-item {
@@ -854,4 +868,17 @@ h2 {
     background: rgb(51, 110, 165);
     padding: 5px;
   }
+
+  .fa-ban {
+    color:red;
+    opacity: 0.7;
+    -webkit-appearance: none;
+    font-size: 30px;
+  }
+  
+  .fa-cut, .fa-baby, .fa-cat, .fa-syringe, .fa-toilet {
+    font-size: 30px;
+    color: rgb(25,55,82);
+  }
+
 }

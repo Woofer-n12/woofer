@@ -25,7 +25,7 @@
           <% likedDogs.forEach(likedDog => { %>
             <li class="woof-list-dog">
               <div class="wooflist-image-div">
-                <img class="woof-list-img" src="<%=likedDog.picture%>">
+                <div class="woof-list-img" style="background-image: url(<%=likedDog.picture%>)"></div>
               </div>
               <img class="available"> <!--this will hide/show -->
               <section class="list-section" id="woof-list-section">
