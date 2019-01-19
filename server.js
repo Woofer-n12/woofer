@@ -171,7 +171,7 @@ function goDogs(req, res){
   client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
     .then(data=>{
       views=JSON.parse(data.rows[0].views);
-      superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}&count=100`)
+      superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
         .then(data=>{
           data.body.petfinder.pets.pet.forEach(ele => {
             dataArray.push(new Dog(ele));
