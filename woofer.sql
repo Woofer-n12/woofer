@@ -15,7 +15,8 @@ CREATE TABLE dogs (
   photos TEXT,
   description TEXT,
   shelter_id VARCHAR(255),
-  options VARCHAR (510)
+  options VARCHAR (510),
+  created_at NUMERIC
 );
 
 CREATE TABLE users (

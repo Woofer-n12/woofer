@@ -8,6 +8,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
 
+//=====================================================================
+const timeouts = {
+  dogs: 10 * 1000// dogs: 86400000
+}
+
 //==========================Set EJS==================================
 app.set('view engine', 'ejs');
 //=====================FOR URL========================================
@@ -56,9 +61,29 @@ function woofList(request, response){
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
-            likedDogs.push(new DBDog(row))
+            if(Date.now()-row.created_at>timeouts.dogs){
+              console.log('data invalidated');
+              superAgent.get(`http://api.petfinder.com/pet.get?key=${process.env.PET_KEY}&format=json&id=${row.dog_id}`)
+              .then(data => {
+                console.log(data.body.petfinder.pet.name.$t);
+                let pet = data.body.petfinder.pet;
+                let SQL = `UPDATE dogs
+                    SET name = $1, availability = $2, description = $3, created_at = $5
+                    WHERE id = $4`;
+                let values = [data.body.petfinder.pet.name.$t, 
+                    data.body.petfinder.pet.status.$t, 
+                    data.body.petfinder.pet.description.$t, 
+                    row.dog_id, 
+                    Date.now()];
+                client.query(SQL, values).then(()=> console.log('goin in')).catch(err => console.error(err));
+                likedDogs.push(new Dog(pet));
+              })
+              .catch(err => console.error(err));
+            }else{
+              likedDogs.push(new DBDog(row));
+            }
           })
-          response.render('pages/wooflist/listShow.ejs',{likedDogs});
+        response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
 }
@@ -175,11 +200,11 @@ function goDogs(req, res){
             dataArray.push(new Dog(ele));
           });
           let SQL = `INSERT INTO dogs
-                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) 
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options, created_at) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                 ON CONFLICT DO NOTHING`;
           dataArray.forEach(ele=>{
-            let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
+            let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt, Date.now()];
             client.query(SQL, values).catch(er => console.log(er));
           })
           dataarr.push(views);
@@ -383,3 +408,4 @@ function IndiShelter(shelter){
 }
 //===========================Listener============================
 app.listen(PORT, () => console.log(`APP is up on PORT : ${PORT}`));
+//==================CACHE INVALIDATION =================================
