@@ -26,7 +26,7 @@ app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
 app.post('/woof-list', woofList);
 app.get('/dog-detail', dogDetail);
-// app.get('/remove-dog', removeDog);
+app.post('/remove-dog', removeDog);
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
 
@@ -42,13 +42,12 @@ function aboutTeam(request, response){
 
 function woofList(request, response){
   let likedDogs = [];
-  console.log(request.body);
   let id = request.body.username;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
     .then(data=>{
-      let likes = JSON.parse(data.rows[0].likes)
-      let string = ''
+      let likes = JSON.parse(data.rows[0].likes);
+      let string = '';
       for(let i=1 ; i<=likes.length; i++) {
         string += '$' + i + ', ';
       }
@@ -115,18 +114,23 @@ function dogDetail(req,res){
 function removeDog(req, res){
   console.log(req,'attempting to a remove a dog from a users liked dogs')
   let SQL = `SELECT likes FROM users WHERE id=$1`;
-  client.query(SQL, req.body.uId)
+  console.log(req.body);
+  return client.query(SQL, [req.body.username])
     .then(data => {
-      let newData = JSON.parse(data);
+      console.log(data.rows[0].likes);
+      let newData = JSON.parse(data.rows[0].likes);
+      console.log(newData);
       let newerData = newData.filter(ele => {
         return ele !== req.body.dogId;
       });
-      let SQL = `UPDATE users
-                  SET likes=$1
-                  WHERE id=$2`;
-      let values = [JSON.stringify(newerData), req.body.uId];
-      client.query(SQL, values)
-      res.redirect('/woof-list');
+      console.log(newerData);
+      let SQL1123 = `UPDATE users
+                    SET likes = $1
+                    WHERE id = $2`;
+      let newestData = JSON.stringify(newerData);
+      let values3211 = [newestData, req.body.username];
+      client.query(SQL1123, values3211);
+      woofList(req,res);
     })
     .catch(err => {
       console.log(err);
@@ -135,9 +139,9 @@ function removeDog(req, res){
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
-                (likes, views)
-                VALUES ($1, $2)
-                RETURNING id`;
+            (likes, views)
+            VALUES ($1, $2)
+            RETURNING id`;
   let likes = [];
   let views = [];
   let values = [JSON.stringify(likes), JSON.stringify(views)];

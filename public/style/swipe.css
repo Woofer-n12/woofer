@@ -112,7 +112,7 @@ body {
 #tinderslide .dislike {
     right: 45px;
     left: auto;
-    background: url("../img/nope.png") no-repeat scroll 0 0;
+    /* background: url("../img/nope.png") no-repeat scroll 0 0; */
 }
 
 /* Image container */
@@ -332,7 +332,7 @@ body {
     #tinderslide .dislike {
         right: 45px;
         left: auto;
-        background: url("../img/nope.png") no-repeat scroll 0 0;
+        /* background: url("../img/nope.png") no-repeat scroll 0 0; */
     }
     
     /* Image container */
