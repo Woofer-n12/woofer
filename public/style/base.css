@@ -118,12 +118,13 @@ h2 {
 .dogShow-detailForm {
   margin-left: -7px;
   margin-top: 24px;
+  font-size: 25px;
 }
 
 .form-title {
   color: whitesmoke;
   margin-bottom: 16px;
-  font-size: 20px;
+  font-size: 25px;
   width: 91%;
 }
 
@@ -808,7 +809,7 @@ margin-top: 15px !important;
   .dogShow-detailForm-div {
     background: #cd661d;
     color: whitesmoke;
-    height: 508px;
+    height: 608px;
     margin-top: 822px;
     margin-bottom: 40px;
     position: absolute;
@@ -828,9 +829,10 @@ margin-top: 15px !important;
   }
 
   .dogShow-detailForm input {
-    width: 596px;
+    width: 579px;
     margin-top: 5px;
     margin-bottom: 5px;
+    font-size: 20px;
   }
 
   .form-input {
@@ -838,9 +840,22 @@ margin-top: 15px !important;
     border: none;
   }
 
-  .form-description, textarea {
+  .form-description {
     width: 600px;
+    font-size: 20px;
+    height: 200px;
+    /* position: fixe; */
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch
+  }
+
+  textarea {
+    width: 600px;
+    font-size: 20px;
+    height: 140px;
     overflow:hidden scroll;
+    -webkit-overflow-scrolling: touch
   }
 
   /* CSS for DOG DETAIL Page */
