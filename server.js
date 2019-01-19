@@ -42,7 +42,6 @@ function aboutTeam(request, response){
 
 function woofList(request, response){
   let likedDogs = [];
-  console.log(request.body);
   let id = request.body.username;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
