@@ -20,7 +20,7 @@
                 <ul class="dogShow-ul">
                     <% dataarr[1].forEach(dog => { %>
                     <%if (!dataarr[0].includes(dog.ID)){%>
-                        <%if (!dog.name.toUpperCase().includes('ADOPTED')){ %>
+                        <%if (!dog.name.toUpperCase().includes('ADOPTED') || !dog.name.toUpperCase().includes('ADOPT') || !dog.name.toUpperCase().includes('VOLUNTEERS') || !dog.name.toUpperCase().includes('FOSTERS') || !dog.name.toUpperCase().includes('ADOPTED!')){ %>
                         <li class="dogShow-img <%=dog.ID%>">
                                 <div class="img" style="background-image: url(<%=dog.picture%>)"></div>
                             <div><%=dog.name%></div>

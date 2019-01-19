@@ -171,7 +171,7 @@ function goDogs(req, res){
   client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
     .then(data=>{
       views=JSON.parse(data.rows[0].views);
-      superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
+      superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}&count=100`)
         .then(data=>{
           data.body.petfinder.pets.pet.forEach(ele => {
             dataArray.push(new Dog(ele));
@@ -276,7 +276,6 @@ function Dog(pet){
   this.opt=pet.options.option;
 }
 Dog.prototype.options = function(pet){
-  console.log(this.gender);
   if (this.gender==='M'){
     this.gender='Male';
   }else{
@@ -323,23 +322,20 @@ Dog.prototype.options = function(pet){
 function DBDog(pet){
   this.ID = pet.dog_id;
   this.locationID = pet.shelter_id;
-  this.name = pet.name;
-  this.age = pet.age;
-  this.gender = pet.gender;
+  this.name = pet.name || 'Not Provided';
+  this.age = pet.age || 'Not Provided';
+  this.gender = pet.gender || 'Not Provided';
   this.housetrained = pet.housetrained;
-  this.size = pet.size.$t;
+  this.size = pet.size.$t || 'Not Provided';
   this.fixed = pet.fixed;
   this.catFriendly = pet.cats;
   this.kidFriendly = pet.kids;
   this.vaccinated = pet.vaccinated;
   this.isAdopted = pet.availability;
-  this.breed = pet.breed;
-  this.mix = pet.mix;
-  this.picture = pet.photos;//returns an array
-  this.description = pet.description;
-  if (this.catFriendly==='false'){
-    console.log('=========================================='+this.name);
-  }
+  this.breed = pet.breed || 'Not Provided';
+  this.mix = pet.mix || 'Not Provided';
+  this.picture = pet.photos || 'images/no_img.jpg';
+  this.description = pet.description || 'Not Provided';
 }
 
 function Shelter(shelter){

@@ -226,8 +226,14 @@ h2 {
 
 .woof-list-img {
   height: 100%;
-  margin-bottom: 10px;
-  position: relative;
+    margin-bottom: 10px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    /* height: 100%; */
+    width: 100%;
 }
 
 .about-us-image-div {
@@ -491,6 +497,12 @@ h2 {
     height: 100%;
     margin-bottom: 10px;
     position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    /* height: 100%; */
+    width: 100%;
   }
   
   .woof-list-dog {
@@ -591,7 +603,7 @@ h2 {
 
   p {
     margin-top: 10px;
-    font-size: 30px;
+    font-size: 25px !important;
     width: 100%;
   }
 
@@ -618,9 +630,19 @@ h2 {
     margin-left: 10px;
     margin: 0;
     flex-direction: row;
-    margin-top: 21px;
+    margin-top: 3px;
+    margin-bottom: 6px;
   }
   
+  .about-us-options {
+    height: 28px;
+    margin-left: 10px;
+    margin: 0;
+    flex-direction: row;
+    margin-top: 19px;
+    margin-bottom: 6px;
+  }
+
   .fa-layers {
     margin: 10px 15px 15px 15px; 
     width: 28px;
@@ -649,6 +671,7 @@ h2 {
     list-style: none;
     background:#cd661d;
     width: 100%;
+    margin-top: 10px;
   }
 
   .key-item {
@@ -667,8 +690,8 @@ h2 {
     z-index: 90;
     position: absolute;
     height: 75px;
-    margin-left: 319px;
-    margin-top: 5px;
+    margin-left: 602px;
+    margin-top: -69px;
     float: right;
   }
 
@@ -745,11 +768,19 @@ h2 {
     width: 50%;
     margin-left: 5px;
     margin-top: 5px;
+    height: 245px;
   }
   
   .dogDetail-img {
-    width: 100%;
     border: 3px solid  #cd661d;
+    height: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    width: 100%;
   }
 
   .dogDetail-info-div {
@@ -763,6 +794,7 @@ h2 {
     justify-content: space-evenly;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .dogDetail-description {
@@ -782,6 +814,7 @@ h2 {
 
   .dogDetail-info-ul li {
     margin-bottom: 8px;
+    font-size: 25px;
   }
 
   .dogDetail-description p {
@@ -834,9 +867,9 @@ h2 {
     max-width:100%;
   }
 
-  .available {
+  /* .available {
     display: none;
-  }
+  } */
 
   .something {
     display: none;
@@ -853,5 +886,25 @@ h2 {
     margin-top: 6%;
     background: rgb(51, 110, 165);
     padding: 5px;
+  }
+
+  .fa-ban {
+    color:red;
+    opacity: 0.7;
+    -webkit-appearance: none;
+    font-size: 30px;
+  }
+  
+  .fa-cut, .fa-baby, .fa-cat, .fa-syringe, .fa-toilet {
+    font-size: 30px;
+    color: rgb(25,55,82);
+  }
+
+  #search-button {
+    height: 0px;
+    width: 0px;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
   }
 }

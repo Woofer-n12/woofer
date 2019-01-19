@@ -21,13 +21,14 @@
       
       <article>
         <ul>
-        <%console.log('running listshow')%>
           <% likedDogs.forEach(likedDog => { %>
             <li class="woof-list-dog">
               <div class="wooflist-image-div">
-                <img class="woof-list-img" src="<%=likedDog.picture%>">
+                <div class="woof-list-img" style="background-image: url(<%=likedDog.picture%>)"></div>
               </div>
-              <img class="available"> <!--this will hide/show -->
+              <% if (likedDog.isAdopted === 'X' || likedDog.name.toUpperCase().includes('(ADOPT PEND)') || likedDog.name.toUpperCase().includes('ADOPTED') || likedDog.name.toUpperCase().includes('ADOPTED!') || likedDog.name.toUpperCase().includes('ADOPT')){%>
+                <img class="available" src="images/adopted.png"> <!--this will hide/show -->
+                <%}%>
               <section class="list-section" id="woof-list-section">
                 <section class="wooflist-p">
                   <p>Name: <%=likedDog.name%></p>
@@ -42,7 +43,6 @@
                   </span>
                   <%}%>
 
-                  <%console.log('thisdoglikescats ' + likedDog.catFriendly)%>
                   <%if (likedDog.vaccinated === 'true') {%>
                   <span class="fa-layers hasShots">
                     <i class="fas fa-syringe"></i>

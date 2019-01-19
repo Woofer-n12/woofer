@@ -21,7 +21,8 @@
       </div>
       <div class="dogDetail-all-dog-info">
         <div class="dogDetail-img-div">
-          <img src="<%=dogDeets[0].picture%>" alt="Picture of <%=dogDeets[0].name%>!!" class="dogDetail-img">
+          <div style="background-image: url(<%=dogDeets[0].picture%>0" alt="Picture of <%=dogDeets[0].name%>!!" class="dogDetail-img">
+        </div>
         </div>
         <div class="dogDetail-info-div">
           <ul class="dogDetail-info-ul">
@@ -32,23 +33,37 @@
             <li>Mix: <%=dogDeets[0].mix%></li>
           </ul>
           <section class="options dogDetail-options">
-              <span class="fa-layers altered">
-                <i class="fas fa-cut"></i>
-              </span>
-              <span class="fa-layers hasShots">
-                <i class="fas fa-syringe"></i>
-              </span>
-              <span class="fa-layers housetrained">
-                <i class="fas fa-toilet"></i>
-              </span>
-              <span class="fa-layers noCats">
-                <i class="fas fa-cat"></i>
-                <i class="fa-inverse fas fa-ban"></i>
-              </span>
-              <span class="fa-layers fa-fw noKids">
-                <i class="fas fa-baby"></i>
-                <i class="fa-inverse fas fa-ban"></i>
-              </span>
+              <% if (dogDeets[0].fixed === 'true'){%>
+                <span class="fa-layers altered">
+                  <i class="fas fa-cut"></i>
+                </span>
+                <%}%>
+
+                <%if (dogDeets[0].vaccinated === 'true') {%>
+                <span class="fa-layers hasShots">
+                  <i class="fas fa-syringe"></i>
+                </span>
+                <%}%>
+
+                <%if (dogDeets[0].housetrained === 'true') {%>
+                <span class="fa-layers housetrained">
+                  <i class="fas fa-toilet"></i>
+                </span>
+                <%}%>
+
+                <%if (dogDeets[0].catFriendly === 'false') {%>
+                <span class="fa-layers noCats">
+                  <i class="fas fa-cat"></i>
+                  <i class="fa-inverse fas fa-ban"></i>
+                </span>
+                <%}%>
+
+                <%if (dogDeets[0].kidFriendly === 'false') {%>
+                <span class="fa-layers fa-fw noKids">
+                  <i class="fas fa-baby"></i>
+                  <i class="fa-inverse fas fa-ban"></i>
+                </span>
+                <%}%>
             </section>
         </div>
       </div>
