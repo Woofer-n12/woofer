@@ -1,7 +1,7 @@
 /* ======================== Start of Hamburger ========================= */
-#search-button{
+/* #search-button{
   display: none;
-}
+} */
 
 a {
   text-decoration: none;
@@ -164,9 +164,9 @@ a {
 
 /* ======================== End of Hamburger ========================= */
 @media (min-width:767px){ 
-  #search-button{
+  /* #search-button{
     display: none;
-  }
+  } */
   
   a {
     text-decoration: none;

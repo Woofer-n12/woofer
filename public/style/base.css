@@ -634,6 +634,15 @@ h2 {
     margin-bottom: 6px;
   }
   
+  .about-us-options {
+    height: 28px;
+    margin-left: 10px;
+    margin: 0;
+    flex-direction: row;
+    margin-top: 19px;
+    margin-bottom: 6px;
+  }
+
   .fa-layers {
     margin: 10px 15px 15px 15px; 
     width: 28px;
@@ -681,8 +690,8 @@ h2 {
     z-index: 90;
     position: absolute;
     height: 75px;
-    margin-left: 319px;
-    margin-top: 5px;
+    margin-left: 602px;
+    margin-top: -69px;
     float: right;
   }
 
@@ -759,11 +768,19 @@ h2 {
     width: 50%;
     margin-left: 5px;
     margin-top: 5px;
+    height: 245px;
   }
   
   .dogDetail-img {
-    width: 100%;
     border: 3px solid  #cd661d;
+    height: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 50% 20%;
+    background-size: cover;
+    width: 100%;
   }
 
   .dogDetail-info-div {
@@ -777,6 +794,7 @@ h2 {
     justify-content: space-evenly;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .dogDetail-description {
@@ -796,6 +814,7 @@ h2 {
 
   .dogDetail-info-ul li {
     margin-bottom: 8px;
+    font-size: 25px;
   }
 
   .dogDetail-description p {
@@ -848,9 +867,9 @@ h2 {
     max-width:100%;
   }
 
-  .available {
+  /* .available {
     display: none;
-  }
+  } */
 
   .something {
     display: none;
@@ -881,4 +900,11 @@ h2 {
     color: rgb(25,55,82);
   }
 
+  #search-button {
+    height: 0px;
+    width: 0px;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+  }
 }

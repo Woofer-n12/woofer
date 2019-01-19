@@ -91,7 +91,6 @@ body {
 /* Like & dislike badge images */
 #tinderslide .like,
 #tinderslide .dislike {
-    background: url("../img/liked.png") no-repeat scroll 0 0;
     opacity: 0;
     height: 80px;
     position: absolute;
@@ -112,7 +111,6 @@ body {
 #tinderslide .dislike {
     right: 45px;
     left: auto;
-    /* background: url("../img/nope.png") no-repeat scroll 0 0; */
 }
 
 /* Image container */
@@ -311,7 +309,6 @@ body {
     /* Like & dislike badge images */
     #tinderslide .like,
     #tinderslide .dislike {
-        background: url("../img/liked.png") no-repeat scroll 0 0;
         opacity: 0;
         height: 80px;
         position: absolute;
@@ -332,7 +329,6 @@ body {
     #tinderslide .dislike {
         right: 45px;
         left: auto;
-        /* background: url("../img/nope.png") no-repeat scroll 0 0; */
     }
     
     /* Image container */

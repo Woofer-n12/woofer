@@ -6,8 +6,6 @@ $(function(){
     console.log(localStorage.getItem('userId'));
     $('#unameit').attr('value', JSON.parse(localStorage.getItem('userId')))
   }else{
-    console.log('hello');
-    // $.get('http://localhost:8000/user').then(console.log).catch(console.error);
     $('#checkU').hide();
     $('#checkU').click();
   }
@@ -24,4 +22,5 @@ $('#wooflistformsubmit').on('click', ()=>{
   $('#lsun').attr('value',`${JSON.parse(localStorage.getItem('userId'))}`);
   $('#wooflistformform').click();
 })
+
 
