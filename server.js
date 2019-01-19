@@ -26,7 +26,7 @@ app.post('/user', makeUser);
 app.get('/about-the-team', aboutTeam);
 app.post('/woof-list', woofList);
 app.get('/dog-detail', dogDetail);
-// app.get('/remove-dog', removeDog);
+app.post('/remove-dog', removeDog);
 app.post('/likedog', likeDog);
 app.post('/dogviewed', viewDog);
 
@@ -46,8 +46,8 @@ function woofList(request, response){
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
     .then(data=>{
-      let likes = JSON.parse(data.rows[0].likes)
-      let string = ''
+      let likes = JSON.parse(data.rows[0].likes);
+      let string = '';
       for(let i=1 ; i<=likes.length; i++) {
         string += '$' + i + ', ';
       }
@@ -57,6 +57,7 @@ function woofList(request, response){
         .then(result => {
           result.rows.forEach(row => {
             likedDogs.push(new DBDog(row));
+
           })
           response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
@@ -110,22 +111,27 @@ function dogDetail(req,res){
 //required:dog id and user id
 //when this path is called, we will query the users table for all liked dogs of the user that pressed the button,
 //then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database
+
 //at the users row.
 function removeDog(req, res){
   console.log(req,'attempting to a remove a dog from a users liked dogs')
   let SQL = `SELECT likes FROM users WHERE id=$1`;
-  client.query(SQL, req.body.uId)
+  return client.query(SQL, [req.body.username])
     .then(data => {
-      let newData = JSON.parse(data);
+      console.log(data.rows[0].likes);
+      let newData = JSON.parse(data.rows[0].likes);
+      console.log(newData);
       let newerData = newData.filter(ele => {
         return ele !== req.body.dogId;
       });
-      let SQL = `UPDATE users
-                  SET likes=$1
-                  WHERE id=$2`;
-      let values = [JSON.stringify(newerData), req.body.uId];
-      client.query(SQL, values)
-      res.redirect('/woof-list');
+      console.log(newerData);
+      let SQL1123 = `UPDATE users
+                    SET likes = $1
+                    WHERE id = $2`;
+      let newestData = JSON.stringify(newerData);
+      let values3211 = [newestData, req.body.username];
+      client.query(SQL1123, values3211);
+      woofList(req,res);
     })
     .catch(err => {
       console.log(err);
@@ -134,9 +140,9 @@ function removeDog(req, res){
 //==================CHECK USER===========================================
 function makeUser(req, res){
   let SQL = `INSERT INTO users
-                (likes, views)
-                VALUES ($1, $2)
-                RETURNING id`;
+            (likes, views)
+            VALUES ($1, $2)
+            RETURNING id`;
   let likes = [];
   let views = [];
   let values = [JSON.stringify(likes), JSON.stringify(views)];

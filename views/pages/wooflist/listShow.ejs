@@ -76,9 +76,9 @@
                       <input class="button detail-button" type="submit" value="View Details">
                   </form>
 
-                  <form class="wooflist-form" action="/remove-dog" method="PUT">
+                  <form class="wooflist-form" action="/remove-dog" method="POST">
                     <input type="hidden" value="<%=likedDog.ID%>" name="dogId">
-                    <input type="hidden" value="" name="uId" class="store-uId">
+                    <input type="hidden" value="" name="username" class="store-uId">
                     <input class="button delete-button" type="submit" value="Delete">
                   </form>
 
@@ -91,5 +91,7 @@
       </article>
       <%-include ../../layout/footer%>
     </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="/js/uId.js"></script>
 </body>
 </html>
