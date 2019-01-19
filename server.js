@@ -42,7 +42,6 @@ function aboutTeam(request, response){
 
 function woofList(request, response){
   let likedDogs = [];
-  console.log(request.body);
   let id = request.body.username;
   let SQL=`SELECT likes FROM users WHERE id = $1`;
   client.query(SQL,[id])
@@ -57,7 +56,7 @@ function woofList(request, response){
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
-            likedDogs.push(new DBDog(row))
+            likedDogs.push(new DBDog(row));
           })
           response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
@@ -110,7 +109,7 @@ function dogDetail(req,res){
 //==================REMOVE DOGS==========================================
 //required:dog id and user id
 //when this path is called, we will query the users table for all liked dogs of the user that pressed the button,
-//then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database 
+//then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database
 //at the users row.
 function removeDog(req, res){
   console.log(req,'attempting to a remove a dog from a users liked dogs')
@@ -163,7 +162,6 @@ function goDogs(req, res){
   //get all shelters in the searched area
   searchApiForShelters(req.body.search);
 
-  //gather all dogs that a user has viewed
   client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
     .then(data=>{
       views=JSON.parse(data.rows[0].views);
@@ -173,11 +171,11 @@ function goDogs(req, res){
             dataArray.push(new Dog(ele));
           });
           let SQL = `INSERT INTO dogs
-                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) 
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, housetrained, fixed, kids, cats, vaccinated) 
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                 ON CONFLICT DO NOTHING`;
           dataArray.forEach(ele=>{
-            let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
+            let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.housetrained, ele.fixed, ele.kidFriendly, ele.catFriendly, ele.vaccinated];
             client.query(SQL, values).catch(er => console.log(er));
           })
           dataarr.push(views);
@@ -272,9 +270,22 @@ function Dog(pet){
   this.opt=pet.options.option;
 }
 Dog.prototype.options = function(pet){
-  console.log(pet.options.option);
+  console.log(this.gender);
+  if (this.gender==='M'){
+    this.gender='Male';
+  }else{
+    this.gender='Female';
+  }
+  if (this.size==='S'){
+    this.size='Small';
+  }else if (this.size ==='M'){
+    this.size='Medium';
+  }else if(this.size==='L'){
+    this.size='Large';
+  }else{
+    this.size='Extra Large';
+  }
   if (Array.isArray(pet.options.option)){
-    console.log('arrayexists ' + Array.isArray(pet.options.option));
     pet.options.option.forEach(ele => {
       if(ele.$t === 'noCats'){
         this.catFriendly = false;
@@ -309,50 +320,22 @@ function DBDog(pet){
   this.name = pet.name;
   this.age = pet.age;
   this.gender = pet.gender;
-  this.housetrained = false;
+  this.housetrained = pet.housetrained;
   this.size = pet.size.$t;
-  this.fixed = false;
-  this.catFriendly = true;
-  this.kidFriendly = true;
-  this.vaccinated = false;
+  this.fixed = pet.fixed;
+  this.catFriendly = pet.cats;
+  this.kidFriendly = pet.kids;
+  this.vaccinated = pet.vaccinated;
   this.isAdopted = pet.availability;
   this.breed = pet.breed;
   this.mix = pet.mix;
   this.picture = pet.photos;//returns an array
   this.description = pet.description;
-  this.options(pet);
-  // console.log(this);
-}
-DBDog.prototype.options = function(pet){
-  if (Array.isArray(pet.options)){
-    pet.options.forEach(ele => {
-      if(ele.$t === 'noCats'){
-        this.catFriendly = false;
-      }else if(ele.$t === 'altered'){
-        this.fixed = true;
-      }else if(ele.$t === 'hasShots'){
-        this.vaccinated = true;
-      }else if(ele.$t === 'housetrained'){
-        this.housetrained = true;
-      }else if(ele.$t === 'noKids'){
-        this.kidFriendly = false;
-      }
-    });
-  }else if (pet.options){
-    let derp = pet.options;
-    if(derp.$t === 'noCats'){
-      this.catFriendly = false;
-    }else if(derp.$t === 'altered'){
-      this.fixed = true;
-    }else if(derp.$t === 'hasShots'){
-      this.vaccinated = true;
-    }else if(derp.$t === 'housetrained'){
-      this.housetrained = true;
-    }else if(derp.$t === 'noKids'){
-      this.kidFriendly = false;
-    }
+  if (this.catFriendly==='false'){
+    console.log('=========================================='+this.name);
   }
 }
+
 function Shelter(shelter){
   this.shelters_id = shelter.id.$t;
   this.name = shelter.name.$t;

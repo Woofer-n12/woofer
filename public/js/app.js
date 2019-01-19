@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 $(function(){
   if (localStorage.getItem('userId')){
     console.log(localStorage.getItem('userId'));

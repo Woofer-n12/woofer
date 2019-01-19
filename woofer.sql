@@ -15,7 +15,11 @@ CREATE TABLE dogs (
   photos TEXT,
   description TEXT,
   shelter_id VARCHAR(255),
-  options VARCHAR (510)
+  housetrained VARCHAR(255),
+  fixed VARCHAR(255),
+  kids VARCHAR(255),
+  cats VARCHAR(255),
+  vaccinated VARCHAR(255)
 );
 
 CREATE TABLE users (
