@@ -53,15 +53,12 @@ function woofList(request, response){
         string += '$' + i + ', ';
       }
       let nstring = string.substring(0, string.length-2);
-      console.log(nstring);
       let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
             likedDogs.push(new DBDog(row))
-            console.log(`new dog created, ${likedDogs.length}`)
           })
-          console.log(`rendering wooflist`);
           response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
@@ -80,7 +77,6 @@ function dogDetail(req,res){
           if(data.rows[0]){
             let shelterDeet = new DBShelter(data.rows[0]);
             let dogDeets = [dog, shelterDeet];
-            console.log(dogDeets, 'i am a dog');
             res.render('pages/wooflist/dogDetail', {dogDeets});
           }else{
             superAgent.get(`http://api.petfinder.com/shelter.get?key=${process.env.PET_KEY}&format=json&id=${dog.locationID}`)
@@ -95,7 +91,6 @@ function dogDetail(req,res){
                   console.log(err);
                 });
                 let dogDeets = [dog, shelterDeet];
-                console.log(dogDeets, 'i am a dog');
                 res.render('pages/wooflist/dogDetail', {dogDeets});
               })
               .catch(err => {
@@ -113,7 +108,12 @@ function dogDetail(req,res){
 }
 
 //==================REMOVE DOGS==========================================
+//required:dog id and user id
+//when this path is called, we will query the users table for all liked dogs of the user that pressed the button,
+//then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database 
+//at the users row.
 function removeDog(req, res){
+  console.log(req,'attempting to a remove a dog from a users liked dogs')
   let SQL = `SELECT likes FROM users WHERE id=$1`;
   client.query(SQL, req.body.uId)
     .then(data => {
