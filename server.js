@@ -10,8 +10,7 @@ const PORT = process.env.PORT;
 
 //=====================================================================
 const timeouts = {
-  // dogs: 10 * 1000
-  dogs: 86400000
+  dogs: 30 * 1000//dogs: 86400000
 }
 
 //==========================Set EJS==================================
@@ -76,16 +75,22 @@ function woofList(request, response){
                     data.body.petfinder.pet.description.$t, 
                     row.dog_id, 
                     Date.now()];
+                likedDogs.push(new Dog(data.body.petfinder.pet));
                 client.query(SQL, values).then(()=> console.log('goin in')).catch(err => console.error(err));
-                likedDogs.push(new Dog(pet));
+                // console.log(new Dog(data.body.petfinder.pet));
               })
               .catch(err => console.error(err));
             }else{
               likedDogs.push(new DBDog(row));
             }
           })
-        response.render('pages/wooflist/listShow.ejs',{likedDogs});
-        }).catch((err)=>{console.log(err)});
+          response.render('pages/wooflist/listShow.ejs',{likedDogs});
+        })
+        // .then(data => {
+        //   console.log(data, 'line91');
+        //   response.render('pages/wooflist/listShow.ejs',{data});
+        // })
+        .catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
 }
 
