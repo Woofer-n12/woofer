@@ -53,15 +53,12 @@ function woofList(request, response){
         string += '$' + i + ', ';
       }
       let nstring = string.substring(0, string.length-2);
-      console.log(nstring);
       let SQL2 = `SELECT * FROM dogs WHERE dog_id IN (${nstring})`;
       client.query(SQL2, likes)
         .then(result => {
           result.rows.forEach(row => {
             likedDogs.push(new DBDog(row))
-            console.log(`new dog created, ${likedDogs.length}`)
           })
-          console.log(`rendering wooflist`);
           response.render('pages/wooflist/listShow.ejs',{likedDogs});
         }).catch((err)=>{console.log(err)});
     }).catch((err)=>{console.log(err)});
@@ -80,7 +77,6 @@ function dogDetail(req,res){
           if(data.rows[0]){
             let shelterDeet = new DBShelter(data.rows[0]);
             let dogDeets = [dog, shelterDeet];
-            console.log(dogDeets, 'i am a dog');
             res.render('pages/wooflist/dogDetail', {dogDeets});
           }else{
             superAgent.get(`http://api.petfinder.com/shelter.get?key=${process.env.PET_KEY}&format=json&id=${dog.locationID}`)
@@ -95,7 +91,6 @@ function dogDetail(req,res){
                   console.log(err);
                 });
                 let dogDeets = [dog, shelterDeet];
-                console.log(dogDeets, 'i am a dog');
                 res.render('pages/wooflist/dogDetail', {dogDeets});
               })
               .catch(err => {
@@ -113,18 +108,23 @@ function dogDetail(req,res){
 }
 
 //==================REMOVE DOGS==========================================
+//required:dog id and user id
+//when this path is called, we will query the users table for all liked dogs of the user that pressed the button,
+//then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database 
+//at the users row.
 function removeDog(req, res){
+  console.log(req,'attempting to a remove a dog from a users liked dogs')
   let SQL = `SELECT likes FROM users WHERE id=$1`;
   client.query(SQL, req.body.uId)
     .then(data => {
       let newData = JSON.parse(data);
       let newerData = newData.filter(ele => {
-        return ele !== req.body.dogId; 
+        return ele !== req.body.dogId;
       });
       let SQL = `UPDATE users
                   SET likes=$1
                   WHERE id=$2`;
-      let values = [JSON.stringify(newerData), req.body.uId];           
+      let values = [JSON.stringify(newerData), req.body.uId];
       client.query(SQL, values)
       res.redirect('/woof-list');
     })
@@ -154,27 +154,32 @@ function makeUser(req, res){
 //==============================SEARCH=====================================
 
 function goDogs(req, res){
+
+  //define variables
   let dataArray = [];
   let views=[];
   let dataarr=[]
+
+  //get all shelters in the searched area
   searchApiForShelters(req.body.search);
-  superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
+
+  //gather all dogs that a user has viewed
+  client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
     .then(data=>{
-      data.body.petfinder.pets.pet.forEach(ele => {
-        dataArray.push(new Dog(ele));
-      });
-      let SQL = `INSERT INTO dogs
+      views=JSON.parse(data.rows[0].views);
+      superAgent.get(`http://api.petfinder.com/pet.find?key=${process.env.PET_KEY}&format=json&animal=dog&location=${req.body.search}`)
+        .then(data=>{
+          data.body.petfinder.pets.pet.forEach(ele => {
+            dataArray.push(new Dog(ele));
+          });
+          let SQL = `INSERT INTO dogs
                 (dog_id, name, age, gender, size, availability, breed, mix, photos, description, shelter_id, options) 
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
                 ON CONFLICT DO NOTHING`;
-      dataArray.forEach(ele=>{
-        let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
-        client.query(SQL, values).catch(er => console.log(er));
-      })
-    }).then(()=>{
-      client.query(`SELECT views FROM users WHERE id=${req.body.username}`)
-        .then(data=>{
-          views=JSON.parse(data.rows[0].views);
+          dataArray.forEach(ele=>{
+            let values =[ele.ID, ele.name, ele.age, ele.gender, ele.size, ele.isAdopted, ele.breed, ele.mix, ele.picture, ele.description, ele.locationID, ele.opt];
+            client.query(SQL, values).catch(er => console.log(er));
+          })
           dataarr.push(views);
           dataarr.push(dataArray);
           console.log(dataArray[0].locationID);
@@ -186,7 +191,6 @@ function goDogs(req, res){
       console.log(err);
     })
 }
-
 
 function searchApiForShelters(zip){
   return superAgent.get(`http://api.petfinder.com/shelter.find?key=${process.env.PET_KEY}&format=json&location=${zip}`)
