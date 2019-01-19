@@ -268,11 +268,13 @@ function Dog(pet){
   this.mix = pet.mix.$t;
   this.picture = pet.media.photos.photo[3].$t || 'images/connor-dog.png';
   this.description = pet.description.$t;
-  this.options(pet)
+  this.options(pet);
   this.opt=pet.options.option;
 }
 Dog.prototype.options = function(pet){
+  console.log(pet.options.option);
   if (Array.isArray(pet.options.option)){
+    console.log('arrayexists ' + Array.isArray(pet.options.option));
     pet.options.option.forEach(ele => {
       if(ele.$t === 'noCats'){
         this.catFriendly = false;
@@ -318,6 +320,7 @@ function DBDog(pet){
   this.mix = pet.mix;
   this.picture = pet.photos;//returns an array
   this.description = pet.description;
+  this.options(pet);
   // console.log(this);
 }
 DBDog.prototype.options = function(pet){

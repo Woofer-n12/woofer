@@ -35,23 +35,39 @@
                   <p>Breed: <%=likedDog.breed%></p>
                 </section>
                 <section class="options">
+
+                  <% if (likedDog.fixed){%>
                   <span class="fa-layers altered">
                     <i class="fas fa-cut"></i>
                   </span>
+                  <%}%>
+
+                  <%console.log('thisdoglikescats ' + likedDog.catFriendly)%>
+                  <%if (likedDog.vaccinated) {%>
                   <span class="fa-layers hasShots">
                     <i class="fas fa-syringe"></i>
                   </span>
+                  <%}%>
+
+                  <%if (likedDog.housetrained) {%>
                   <span class="fa-layers housetrained">
                     <i class="fas fa-toilet"></i>
                   </span>
-                  <span class="fa-layers noCats" id="ICON_<%=likedDog.ID%>">
+                  <%}%>
+
+                  <%if (!likedDog.catFriendly) {%>
+                  <span class="fa-layers noCats">
                     <i class="fas fa-cat"></i>
                     <i class="fa-inverse fas fa-ban"></i>
                   </span>
+                  <%}%>
+
+                  <%if (!likedDog.kidFriendly) {%>
                   <span class="fa-layers fa-fw noKids">
                     <i class="fas fa-baby"></i>
                     <i class="fa-inverse fas fa-ban"></i>
                   </span>
+                  <%}%>
                 </section>
                 <section class="forms-section woof-list-forms-section">
                   
