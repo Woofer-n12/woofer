@@ -112,9 +112,7 @@ function dogDetail(req,res){
 //then it will parse the array, remove the index of the ID of the dog we want to remove, and append the data in the database 
 //at the users row.
 function removeDog(req, res){
-  console.log(req,'attempting to a remove a dog from a users liked dogs')
   let SQL = `SELECT likes FROM users WHERE id=$1`;
-  console.log(req.body);
   return client.query(SQL, [req.body.username])
     .then(data => {
       console.log(data.rows[0].likes);
